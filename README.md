@@ -14,20 +14,32 @@ If your assignment is incomplete, please submit your work before the deadline an
 ## To eLearning: ##
 * Your report, which should be a typed document (.pdf or .txt prefered)
 * A signed and completed cover sheet
+
+# Overview of Assignment #
+You are provided with an ADT and implementation of an arbitrary tree. For each part of this assignment you will need to implement some methods which act on Trees. 
+
+This assignment is worth 8% of your final grade. 
+
+Each of the four parts to this assignment will be marked automatically, on PASTA. The automatic tests make up 70% of the mark for this assignment. The remaining 30% of the marks will be allocated by hand, based on our assessment of the overall quality of your code and of your report. 
+
+Skeleton code is available for download on Piazza and eLearning. This code contains the required interfaces for each part of the assignment and a base tree implementation that your code will extend. Do not modify any of the files in the “interfaces” or “simpletree” packages. None of your added code should be in a package (i.e. in (default), just like all the weekly tasks. 
+
+Some basic unit tests to get your testing started will be provided at a later date. These will correspond to no more than half the available automatic marks. The remaining tests will be hidden, it is up to you to make sure that your tests are sufficiently broad!
+
+
+## Hand Marking [20%] ##
+Part of your mark is based on the overall quality of your code. Your code will be assessed on the following criteria. This is not an exhaustive list, but a guideline to give an idea of the sort of qualities we will be looking for:
+* Commenting
+* Code Quality
+* Efficiency and Maintainability
+
  
-Documentation
-
-Installation
-
-Use Eclipse.
-
 
 Dependencies
-
-    To be added.
+* To be added.
 
 Quick Start
-	To be added.
+* To be added.
 
 
 Version

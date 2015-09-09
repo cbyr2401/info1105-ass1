@@ -27,7 +27,7 @@ Skeleton code is available for download on Piazza and eLearning. This code conta
 Some basic unit tests to get your testing started will be provided at a later date. These will correspond to no more than half the available automatic marks. The remaining tests will be hidden, it is up to you to make sure that your tests are sufficiently broad!
 
 
-## Hand Marking [20%] ##
+## Part 1: Hand Marking [20%] ##
 Part of your mark is based on the overall quality of your code. Your code will be assessed on the following criteria. This is not an exhaustive list, but a guideline to give an idea of the sort of qualities we will be looking for:
 
 * Commenting

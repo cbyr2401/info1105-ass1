@@ -29,19 +29,62 @@ Some basic unit tests to get your testing started will be provided at a later da
 
 ## Hand Marking [20%] ##
 Part of your mark is based on the overall quality of your code. Your code will be assessed on the following criteria. This is not an exhaustive list, but a guideline to give an idea of the sort of qualities we will be looking for:
+
 * Commenting
 * Code Quality
 * Efficiency and Maintainability
 
- 
+## Part 2: Tree traversals [15%] ##
 
-Dependencies
-* To be added.
+```
+#!java
 
-Quick Start
-* To be added.
+List<E> preOrder()
+List<E> postOrder()
+List<E> inOrder()
+```
 
 
-Version
+## Part 3: Tree properties [25%] ##
+
+```
+#!java
+
+int height()
+int height(int maxDepth)
+int numLeaves()
+int numLeaves(int depth)
+int numPositions(int depth)
+boolean isBinary()
+boolean isProperBinary()
+boolean isCompleteBinary()
+boolean isBalancedBinary()
+boolean isHeap(boolean min)
+boolean isBinarySearchTree()
+```
+
+
+## Part 4: Comparing trees [15%] ##
+
+```
+#!java
+
+int compareTo(Tree<E> other)
+```
+
+
+## Part 5: Arithmetic Expressions [15%] ##
+
+```
+#!java
+
+boolean isArithmetic()
+double evaluateArithmetic()
+String getArithmeticString()
+```
+
+
+
+# Version #
 
     0.1 - 06/09/2015 - Initial release - Cian Byrne

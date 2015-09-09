@@ -10,8 +10,8 @@ import simpletree.SimpleTree;
 
 
 /**
- * @author put your unikey here
- * @author and your partner's unikey, if working in a pair
+ * @author njay####
+ * @author cbyr2401
  * 
  * This class, MyTree, should be your solution to the assignment
  * It should remain in the (default package)
@@ -113,45 +113,31 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		
 	}
 	
-	public int height( Position <E> position, int maxDepth) {
-		
+	public int height(Position <E> position, int maxDepth) {		
 		int maxHeight = 0;
 		int subtree = 0;
-		
-		
 
 		if (numChildren(position) == 0 ) {
-			
 			return 0;
-		}
-		else {
-			
-		for (int i = 0; i < numChildren(position); i++) {
-			
-		subtree = 1 + height(position.getChildren().get(i), maxDepth );
-		if (subtree >= maxDepth) {
-			return maxDepth;
-		}
-		if (subtree > maxHeight) 
-			maxHeight = subtree; 
-		}
-	
+		}else {
+			for (int i = 0; i < numChildren(position); i++) {
+				subtree = 1 + height(position.getChildren().get(i), maxDepth );
+				if (subtree >= maxDepth) {
+					return maxDepth;
+				}
+				if (subtree > maxHeight) 
+					maxHeight = subtree; 
+				}
 			return maxHeight;  
 		}
-		
-		
-		
 	}
 
 	@Override
 	public int numLeaves() {
-	
-		
 		if (this.root() == null)
 			return 0; 
 		else if (!hasChildren(this.root())) 
 			return 1; 
-		
 		else return numLeaves(this.root()); 
 		// TODO Auto-generated method stub
 		
@@ -168,8 +154,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		for (int i = 0; i < numChildren(position); i++) {
 		subtree = 1 + numLeaves(position.getChildren().get(i));
 			}
-		
-		
 		return leaves; 
 	}
 	
@@ -233,13 +217,13 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	}
 
 	@Override
-	public boolean isComplete() {
+	public boolean isCompleteBinary() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean isBalanced() {
+	public boolean isBalancedBinary() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -260,10 +244,25 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	public List<E> preOrder() {
 		List<E> list = new ArrayList<E>();
 		return preorder(this.root(), list);
-		// TODO Auto-generated method stub
 	}
-	public List<E> preorder(Position<E> node, List<E> list) {
 
+	@Override
+	public List<E> postOrder() {
+		List<E> list = new ArrayList<E>();
+		return postorder(this.root(), list);
+	}
+
+	@Override
+	public List<E> inOrder() {
+		List<E> list = new ArrayList<E>();
+		return inorder(this.root(), list);
+	}
+	
+	// EXTRA traversal methods, allowing for recursion:
+	/*
+	 * Preorder traversal method:
+	 */
+	public List<E> preorder(Position<E> node, List<E> list) {
 		if (node != null) {
 			list.add(node.getElement());
 			for (int i = 0; i < numChildren(node); i++) {
@@ -272,32 +271,36 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		}
 		return list;
 	}
-
-	@Override
-	public List<E> postOrder() {
-		List<E> list = new ArrayList<E>();
-		return postorder(this.root(), list);
-
-		// TODO Auto-generated method stub
-	}
+	
+	/*
+	 *  PostOrder traversal method:
+	 */
 	public List<E> postorder(Position<E> node, List<E> list) {
 		if (node != null) {
 			for (int i = 0; i < numChildren(node); i++) {
 				postorder(node.getChildren().get(i), list);
 			}
 			list.add(node.getElement());
-
-			
-		}
-		
+		}	
 	return list; 
 	}
-
-
-	@Override
-	public List<E> inOrder() {
+	
+	/*
+	 * InOrder traversal method:
+	 */
+	public List<E> inorder(Position<E> node, List<E> list){
+		if(isProperBinary()){
+			if(node.getChildren().get(0) != null){
+				inorder(node.getChildren().get(0), list);
+			}
+			list.add(node.getElement());
+			if(node.getChildren().get(1) != null){
+				inorder(node.getChildren().get(1), list);
+			}
+		}else{
+			throw new UnsupportedOperationException();
+		}
 		
-		// TODO Auto-generated method stub
 		return null;
 	}
 

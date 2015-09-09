@@ -64,27 +64,155 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	@Override
 	public int height() {
-		// TODO Auto-generated method stub
-		return 0;
+		if (this.root() == null)
+			return -1;   
+		return height(this.root()); 
+		
+		// TODO Auto-generated method stub	
 	}
-
+	
+	public int height (Position <E> position ) {
+		int maxHeight = 0;
+		int subtree = 0; 
+		
+		if (numChildren(position) == 0 ) {
+			return 0;
+		}
+		else {
+			
+		for (int i = 0; i < numChildren(position); i++) {
+			
+		subtree = 1 + height(position.getChildren().get(i) );
+		
+		if (subtree > maxHeight) 
+			maxHeight = subtree; 
+		}
+	
+			return maxHeight;  
+		}
+		
+			
+	}
+	
+	public boolean hasChildren(Position <E> position) {
+		if (numChildren(position) == 0)
+			return false; 
+		else 
+			return true; 
+	}
+		
+	
 	@Override
 	public int height(int maxDepth) {
+		if (this.root() == null)
+			return -1;   
+		else
+		return height(this.root(), maxDepth); 
+	
 		// TODO Auto-generated method stub
-		return 0;
+		
+	}
+	
+	public int height( Position <E> position, int maxDepth) {
+		
+		int maxHeight = 0;
+		int subtree = 0;
+		
+		
+
+		if (numChildren(position) == 0 ) {
+			
+			return 0;
+		}
+		else {
+			
+		for (int i = 0; i < numChildren(position); i++) {
+			
+		subtree = 1 + height(position.getChildren().get(i), maxDepth );
+		if (subtree >= maxDepth) {
+			return maxDepth;
+		}
+		if (subtree > maxHeight) 
+			maxHeight = subtree; 
+		}
+	
+			return maxHeight;  
+		}
+		
+		
+		
 	}
 
 	@Override
 	public int numLeaves() {
+	
+		
+		if (this.root() == null)
+			return 0; 
+		else if (!hasChildren(this.root())) 
+			return 1; 
+		
+		else return numLeaves(this.root()); 
 		// TODO Auto-generated method stub
-		return 0;
+		
 	}
 
+	public int leaves; 
+	public int numLeaves(Position <E> position) {
+		int subtree; 
+		
+		if (numChildren(position) == 0 ) {
+			leaves++; 
+			return 0;
+		}
+		for (int i = 0; i < numChildren(position); i++) {
+		subtree = 1 + numLeaves(position.getChildren().get(i));
+			}
+		
+		
+		return leaves; 
+	}
+	
+	
 	@Override
 	public int numLeaves(int depth) {
+
+		if (this.root() == null)
+			return 0; 
+		else if (!hasChildren(this.root())) 
+			return 1; 
+		else return numLeaves(this.root(), depth); 
+		//System.out.println(leaves); 
+		
 		// TODO Auto-generated method stub
-		return 0;
+		
 	}
+	
+	public int numLeaves(Position <E> position, int depth) {
+		int subtree; 
+		System.out.println("hey");
+		if (numChildren(position) == 0 ) {
+			leaves++; 
+			return 0;
+		}
+		subtree = 1 + numLeaves(position.getChildren().get(0), depth);
+	//	for (int i = 0; i < numChildren(position); i++) {
+			
+	
+	//	
+		//System.out.println("hey");
+		
+	//		}
+		
+		
+		return leaves; 
+	}
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public int numPositions(int depth) {

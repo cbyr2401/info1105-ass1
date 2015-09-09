@@ -14,9 +14,10 @@ public interface TreeProperties {
 	// a tree with only one position has height 0.
 	// a tree where the root has children, but no grandchildren has height 1.
 	// a tree where the root has grandchildren, but no great-grandchildren has height 2.
+	// we will define an empty tree to have height -1.
 
 	public int height(int maxDepth);
-	// calculate the height of the tree, but do not descend deeper than �depth� edges into the tree
+	// calculate the height of the tree, but do not descend deeper than 'depth' edges into the tree
 	// do not visit any nodes deeper than maxDepth while calculating this
 	// do not call your height() method
 	// (some trees are very, very, very big!)
@@ -39,15 +40,17 @@ public interface TreeProperties {
 	// is the tree a proper binary tree?
 	// every position in a proper binary tree has either zero or two children
 
-	public boolean isComplete();
-	// is the tree complete?
-	// a complete tree is one where:
+	public boolean isCompleteBinary();
+	// is the tree a complete binary tree?
 	// 1) all the levels except the last must be full 
 	// 2) all leaves in the last level are filled from left to right (no gaps)
 
-	public boolean isBalanced();
-	// is the tree balanced?
-	// a balanced tree is one where the depth of any two leaves differs by no more than one.
+	public boolean isBalancedBinary();
+	// is the tree a balanced binary tree?
+	// a balanced tree is one where for every position in the tree, the
+	// subtrees rooted at each of the children of the that position have
+	// heights that differ by no more than one.
+	// NOTE: if a node has only one child, the other child is considered to be a subtree of height -1 
 
 	public boolean isHeap(boolean min);
 	// is the tree a min-heap (if min is True), or is the tree a max-heap (if min is False)
@@ -60,5 +63,5 @@ public interface TreeProperties {
 	// a binary search tree is a binary tree such that for any node with value v:
 	// - if there is a left child (child 0 is not null), it contains a value strictly less than v.
 	// - if there is a right child (child 1 is not null), it contains a value strictly greater than v.
-	
+	// if there is only one child, you may assume that it is a left child.
 }

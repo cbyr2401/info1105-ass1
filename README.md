@@ -27,14 +27,14 @@ Skeleton code is available for download on Piazza and eLearning. This code conta
 Some basic unit tests to get your testing started will be provided at a later date. These will correspond to no more than half the available automatic marks. The remaining tests will be hidden, it is up to you to make sure that your tests are sufficiently broad!
 
 
-## Part 1: Hand Marking [20%] ##
+## Hand Marking [20%] ##
 Part of your mark is based on the overall quality of your code. Your code will be assessed on the following criteria. This is not an exhaustive list, but a guideline to give an idea of the sort of qualities we will be looking for:
 
 * Commenting
 * Code Quality
 * Efficiency and Maintainability
 
-## Part 2: Tree traversals [15%] ##
+## Part 1: Tree traversals [15%] ##
 
 ```
 #!java
@@ -45,7 +45,7 @@ List<E> inOrder()
 ```
 
 
-## Part 3: Tree properties [25%] ##
+## Part 2: Tree properties [25%] ##
 
 ```
 #!java
@@ -64,7 +64,7 @@ boolean isBinarySearchTree()
 ```
 
 
-## Part 4: Comparing trees [15%] ##
+## Part 3: Comparing trees [15%] ##
 
 ```
 #!java
@@ -73,7 +73,7 @@ int compareTo(Tree<E> other)
 ```
 
 
-## Part 5: Arithmetic Expressions [15%] ##
+## Part 4: Arithmetic Expressions [15%] ##
 
 ```
 #!java
@@ -83,7 +83,9 @@ double evaluateArithmetic()
 String getArithmeticString()
 ```
 
-
+## Part 5: Written report [10%] ##
+* TESTING REPORT: (1 page, plus appendix): Explain succinctly how you tested your code and why your testing is comprehensive.  Provide a list of your test cases in the appendix, with the expected output and observed output.
+* GROUP WORK: Explain how yo collaborated and the percentage of authorship for various sections.
 
 # Version #
 

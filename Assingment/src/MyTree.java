@@ -74,7 +74,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		if (this.root() == null)
 			return -1;   
 		else
-		return height(this.root(), maxDepth); 
+			return height(this.root(), maxDepth); 
 	
 		// TODO Auto-generated method stub
 		

@@ -227,22 +227,7 @@ public class MyTreeTest {
 		assertEquals(3, bigCompleteTree.height(4));
 		assertEquals(3, justATree.height(4));
 		
-		// test zero:
-		assertEquals(0, binaryTree.height(0));
-		assertEquals(0, bigBinaryTree.height(0));
-		assertEquals(0, bigProperTree.height(0));
-		assertEquals(0, completeTree.height(0));
-		assertEquals(0, bigCompleteTree.height(0));
-		assertEquals(0, justATree.height(0));
 		
-		/* // test negatives:
-		assertEquals(0, binaryTree.height(-1));
-		assertEquals(0, bigBinaryTree.height(-30));
-		assertEquals(0, bigProperTree.height(-1000));
-		assertEquals(0, completeTree.height(-2));
-		assertEquals(0, bigCompleteTree.height(-5));
-		assertEquals(0, justATree.height(-8));
-		*/
 	    
 	}
 	@Test
@@ -259,44 +244,7 @@ public class MyTreeTest {
 
 	@Test 
 	public void testnumLeavesDepth() {
-		assertEquals(0, binaryTree.numLeaves(1));
-		assertEquals(0, bigBinaryTree.numLeaves(1));
-		assertEquals(0, bigProperTree.numLeaves(1));
-		assertEquals(1, completeTree.numLeaves(1));
-		assertEquals(0, bigCompleteTree.numLeaves(1));
-		assertEquals(0, justATree.numLeaves(1));
-		
-		assertEquals(0, binaryTree.numLeaves(2));
-		assertEquals(2, bigBinaryTree.numLeaves(2));
-		assertEquals(3, bigProperTree.numLeaves(2));
-		assertEquals(3, completeTree.numLeaves(2));
-		assertEquals(3, bigCompleteTree.numLeaves(2));
-		assertEquals(4, justATree.numLeaves(2));
-		
-		// should return the actual numLeaves of the tree:		
-		assertEquals(binaryTree.numLeaves(), binaryTree.numLeaves(4));
-		assertEquals(bigBinaryTree.numLeaves(), bigBinaryTree.numLeaves(4));
-		assertEquals(bigProperTree.numLeaves(), bigProperTree.numLeaves(4));
-		assertEquals(completeTree.numLeaves(), completeTree.numLeaves(4));
-		assertEquals(bigCompleteTree.numLeaves(), bigCompleteTree.numLeaves(4));
-		assertEquals(justATree.numLeaves(), justATree.numLeaves(4));
-		
-		// test zero:
-		assertEquals(0, binaryTree.numLeaves(0));
-		assertEquals(0, bigBinaryTree.numLeaves(0));
-		assertEquals(0, bigProperTree.numLeaves(0));
-		assertEquals(0, completeTree.numLeaves(0));
-		assertEquals(0, bigCompleteTree.numLeaves(0));
-		assertEquals(0, justATree.numLeaves(0));
-		
-		/* // test negatives:
-		assertEquals(0, binaryTree.numLeaves(-1));
-		assertEquals(0, bigBinaryTree.numLeaves(-30));
-		assertEquals(0, bigProperTree.numLeaves(-1000));
-		assertEquals(0, completeTree.numLeaves(-2));
-		assertEquals(0, bigCompleteTree.numLeaves(-5));
-		assertEquals(0, justATree.numLeaves(-8));
-		*/
+		fail("Not implemented yet");
 		    
 	}
 	

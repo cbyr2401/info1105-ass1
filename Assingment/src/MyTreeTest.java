@@ -15,12 +15,21 @@ public class MyTreeTest {
 	
 	// declare variables for test cases:
 	MyTree<String> tree = new MyTree<String>(); 
-	
+	MyTree<String> secondtree = new MyTree<String>();
 
     Position<String> a = new SimplePosition<String>("a");
     Position<String> b = new SimplePosition<String>("b");
     Position<String> c = new SimplePosition<String>("c");
     Position<String> d = new SimplePosition<String>("d");
+    // for second tree:
+    Position<String> aa = new SimplePosition<String>("aa");
+    Position<String> bb= new SimplePosition<String>("bb");
+    Position<String> cc = new SimplePosition<String>("cc");
+    Position<String> dd = new SimplePosition<String>("dd");
+    Position<String> e = new SimplePosition<String>("e");
+    Position<String> f = new SimplePosition<String>("f");
+    Position<String> g = new SimplePosition<String>("g");
+    Position<String> h = new SimplePosition<String>("h");
 	
 	@Before
 	public void setUp(){
@@ -28,8 +37,19 @@ public class MyTreeTest {
 		tree.setRoot(a);
 	    tree.insert(a, b);
 	    tree.insert(b, c);
-	    tree.insert(c, d);
-		
+	    tree.insert(c, d);	
+	}
+	
+	@Before
+	public void setUp2(){
+		secondtree.setRoot(aa);
+		secondtree.insert(aa, bb);
+		secondtree.insert(aa, cc);
+		secondtree.insert(bb, dd);
+		secondtree.insert(bb, e);
+		secondtree.insert(e, f);
+		secondtree.insert(e, g);
+		secondtree.insert(cc, h);
 	}
 	
 	
@@ -48,17 +68,20 @@ public class MyTreeTest {
 	@Test
 	public void testPostOrder() {
 		assertEquals(Arrays.asList("d","c","b","a"), tree.postOrder());
+		assertEquals(Arrays.asList("dd","f","g","e","bb","h","cc","aa"), secondtree.postOrder());
 	}
 	
 	@Test
 	public void testPreOrder() {
 		assertEquals(Arrays.asList("a","b","c","d"), tree.preOrder());
+		assertEquals(Arrays.asList("aa","bb","dd","e","f","g","cc","h"), secondtree.preOrder());
 		   
 	}
 	
 	@Test
 	public void testHeight() {
 		assertEquals(3, tree.height());
+		assertEquals(3, secondtree.height());
 	    
 	}
 	@Test
@@ -109,11 +132,15 @@ public class MyTreeTest {
 
 	 //   System.out.println(tree.numLeaves()); 
 	    
+	    //tests:
+	    assertEquals(1, tree.numLeaves());
+	    assertEquals(4, secondtree.numLeaves());
+	    
 	}
 
 	@Test 
-	public void numLeavesDepth() {
-		MyTree<String> tree = new MyTree<String>(); 
+	public void testnumLeavesDepth() {
+		MyTree<String> newtree = new MyTree<String>(); 
 		
 		Position<String> a = new SimplePosition<String>("a");
 	    Position<String> b = new SimplePosition<String>("b");
@@ -123,16 +150,73 @@ public class MyTreeTest {
 	    Position<String> f = new SimplePosition<String>("f");
 	    Position<String> g = new SimplePosition<String>("g");
 	    
-	    tree.setRoot(a);
-	    tree.insert(a, b);
-	    tree.insert(b, c);
-	    tree.insert(a, d);
-	    tree.insert(d, e);
-	    tree.insert(e, f);
+	    newtree.setRoot(a);
+	    newtree.insert(a, b);
+	    newtree.insert(b, c);
+	    newtree.insert(a, d);
+	    newtree.insert(d, e);
+	    newtree.insert(e, f);
 	 //   System.out.println(tree.size());
-	    tree.insert(f, g);
-	    tree.numLeaves(2); 
+	    newtree.insert(f, g);
+	    newtree.numLeaves(2); 
 		    
+	}
+	
+	@Test
+	public void testIsBinary(){
+		assertFalse(tree.isBinary());
+		assertTrue(secondtree.isBinary());
+		
+		MyTree<String> newtree = new MyTree<String>(); 
+		
+		Position<String> a = new SimplePosition<String>("a");
+	    Position<String> b = new SimplePosition<String>("b");
+	    Position<String> c = new SimplePosition<String>("c");
+	    Position<String> d = new SimplePosition<String>("d");
+	    Position<String> e = new SimplePosition<String>("e");
+	    Position<String> f = new SimplePosition<String>("f");
+	    Position<String> g = new SimplePosition<String>("g");
+	    Position<String> h = new SimplePosition<String>("h");
+
+	    newtree.setRoot(a);
+	    newtree.insert(a, b);
+	    newtree.insert(a, c);
+	    newtree.insert(b, d);
+	    newtree.insert(d, e);
+	    newtree.insert(e, f);
+	    newtree.insert(c, g);
+	    newtree.insert(c, h);
+	    
+	    assertTrue(newtree.isBinary());
+		
+	}
+	
+	@Test
+	public void testIsProperBinary(){
+		assertFalse(tree.isProperBinary());
+		assertEquals(false, secondtree.isProperBinary()); // c has one child h, not two.
+		
+		MyTree<String> newtree = new MyTree<String>(); 
+		
+		Position<String> a = new SimplePosition<String>("a");
+	    Position<String> b = new SimplePosition<String>("b");
+	    Position<String> c = new SimplePosition<String>("c");
+	    Position<String> d = new SimplePosition<String>("d");
+	    Position<String> e = new SimplePosition<String>("e");
+	    Position<String> f = new SimplePosition<String>("f");
+	    Position<String> g = new SimplePosition<String>("g");
+	    Position<String> h = new SimplePosition<String>("h");
+	    
+	    newtree.setRoot(a);
+	    newtree.insert(a, b);
+	    newtree.insert(a, c);
+	    newtree.insert(b, d);
+	    newtree.insert(b, e);
+	    newtree.insert(d, f);
+	    newtree.insert(d, g);
+	    //newtree.insert(c, h);
+	    
+	    assertTrue(newtree.isProperBinary());
 	}
 	
 

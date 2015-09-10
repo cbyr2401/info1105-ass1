@@ -69,38 +69,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		return height(this.root()); 
 		
 		// TODO Auto-generated method stub	
-	}
-	
-	public int height (Position <E> position ) {
-		int maxHeight = 0;
-		int subtree = 0; 
-		
-		if (numChildren(position) == 0 ) {
-			return 0;
-		}
-		else {
-			
-		for (int i = 0; i < numChildren(position); i++) {
-			
-		subtree = 1 + height(position.getChildren().get(i) );
-		
-		if (subtree > maxHeight) 
-			maxHeight = subtree; 
-		}
-	
-			return maxHeight;  
-		}
-		
-			
-	}
-	
-	public boolean hasChildren(Position <E> position) {
-		if (numChildren(position) == 0)
-			return false; 
-		else 
-			return true; 
-	}
-		
+	}	
 	
 	@Override
 	public int height(int maxDepth) {
@@ -112,25 +81,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public int height(Position <E> position, int maxDepth) {		
-		int maxHeight = 0;
-		int subtree = 0;
-
-		if (numChildren(position) == 0 ) {
-			return 0;
-		}else {
-			for (int i = 0; i < numChildren(position); i++) {
-				subtree = 1 + height(position.getChildren().get(i), maxDepth );
-				if (subtree >= maxDepth) {
-					return maxDepth;
-				}
-				if (subtree > maxHeight) 
-					maxHeight = subtree; 
-				}
-			return maxHeight;  
-		}
-	}
 
 	@Override
 	public int numLeaves() {
@@ -138,9 +88,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return 0; 
 		else if (!hasChildren(this.root())) 
 			return 1; 
-		else return numLeaves(this.root()); 
-		// TODO Auto-generated method stub
-		
+		else return numLeaves(this.root()); 		
 	}
 
 	public int leaves; 
@@ -191,12 +139,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		
 		return leaves; 
 	}
-	
-	
-	
-	
-	
-	
 
 	@Override
 	public int numPositions(int depth) {
@@ -206,14 +148,24 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	@Override
 	public boolean isBinary() {
-		// TODO Auto-generated method stub
-		return false;
+		if(this.root() == null){
+			// CHECK THIS:  Can an empty tree be binary??
+			return false;
+		}else if(numChildren(this.root())>2){
+			return false;
+		}
+		else{
+			return isBinary(this.root());
+		}
 	}
 
 	@Override
 	public boolean isProperBinary() {
-		// TODO Auto-generated method stub
-		return false;
+		if(isBinary()){
+			return isProperBinary(this.root());
+		}else{
+			return false;
+		}
 	}
 
 	@Override
@@ -258,11 +210,23 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		return inorder(this.root(), list);
 	}
 	
-	// EXTRA traversal methods, allowing for recursion:
+	// HELPER METHODS:
+	/*
+	 * checks if parent has children
+	 */
+	private boolean hasChildren(Position <E> position) {
+		if (numChildren(position) == 0)
+			return false; 
+		else 
+			return true; 
+	}
+	
+	
+	// EXTRA methods, allowing for recursion:
 	/*
 	 * Preorder traversal method:
 	 */
-	public List<E> preorder(Position<E> node, List<E> list) {
+	private List<E> preorder(Position<E> node, List<E> list) {
 		if (node != null) {
 			list.add(node.getElement());
 			for (int i = 0; i < numChildren(node); i++) {
@@ -275,7 +239,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	/*
 	 *  PostOrder traversal method:
 	 */
-	public List<E> postorder(Position<E> node, List<E> list) {
+	private List<E> postorder(Position<E> node, List<E> list) {
 		if (node != null) {
 			for (int i = 0; i < numChildren(node); i++) {
 				postorder(node.getChildren().get(i), list);
@@ -288,7 +252,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	/*
 	 * InOrder traversal method:
 	 */
-	public List<E> inorder(Position<E> node, List<E> list){
+	private List<E> inorder(Position<E> node, List<E> list){
 		if(isProperBinary()){
 			if(node.getChildren().get(0) != null){
 				inorder(node.getChildren().get(0), list);
@@ -302,6 +266,85 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		}
 		
 		return null;
+	}
+	
+	/*
+	 * int height() helper
+	 */
+	private int height (Position<E> position){
+		int maxHeight = 0;
+		int subtree = 0; 
+		
+		if (numChildren(position) == 0 ) {
+			return 0;
+		}else {	
+		for(int i = 0; i < numChildren(position); i++) {
+			subtree = 1 + height(position.getChildren().get(i));
+		
+			if (subtree > maxHeight) 
+				maxHeight = subtree; 
+			}
+			return maxHeight;  
+		}		
+	}
+	
+	/*
+	 *  int height(int maxDepth) helper
+	 */
+	private int height(Position <E> position, int maxDepth) {		
+		int maxHeight = 0;
+		int subtree = 0;
+
+		if (numChildren(position) == 0 ) {
+			return 0;
+		}else {
+			for (int i = 0; i < numChildren(position); i++) {
+				subtree = 1 + height(position.getChildren().get(i), maxDepth );
+				if (subtree >= maxDepth) {
+					return maxDepth;
+				}
+				if (subtree > maxHeight) 
+					maxHeight = subtree; 
+				}
+			return maxHeight;  
+		}
+	}
+	
+	/*
+	 * isBinary() helper method:
+	 */
+	private boolean isBinary(Position<E> position){
+		int numChilds = numChildren(position);
+		if(numChilds == 0){
+			return true;
+		}
+		else if(numChilds >= 2){
+			for(int i=0; i < numChilds; i++){
+				isBinary(position.getChildren().get(i));
+			}
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/*
+	 * isProperBinary() helper method:
+	 */
+	private boolean isProperBinary(Position<E> position){
+		int numChilds = numChildren(position);
+		if(numChilds == 0){
+			return true;
+		}else if(numChilds == 1){
+			return false;
+		}else if(numChilds == 2){
+			for(int i=0; i < 2; i++){
+				isProperBinary(position.getChildren().get(i));
+			}
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }

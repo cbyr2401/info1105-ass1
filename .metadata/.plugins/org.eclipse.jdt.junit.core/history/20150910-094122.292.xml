@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MyTreeTest" project="Assingment" tests="8" started="8" failures="0" errors="0" ignored="0">
+  <testsuite name="MyTreeTest" time="0.0">
+    <testcase name="testPostOrder" classname="MyTreeTest" time="0.0"/>
+    <testcase name="numLeavesDepth" classname="MyTreeTest" time="0.0"/>
+    <testcase name="testConstruction" classname="MyTreeTest" time="0.0"/>
+    <testcase name="testPreOrder" classname="MyTreeTest" time="0.0"/>
+    <testcase name="testHeightMaxDepth" classname="MyTreeTest" time="0.0"/>
+    <testcase name="testHeight" classname="MyTreeTest" time="0.0"/>
+    <testcase name="testInOrder" classname="MyTreeTest" time="0.0"/>
+    <testcase name="testNumLeaves" classname="MyTreeTest" time="0.0"/>
+  </testsuite>
+</testrun>

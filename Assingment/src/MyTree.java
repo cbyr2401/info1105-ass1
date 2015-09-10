@@ -67,8 +67,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		if (this.root() == null)
 			return -1;   
 		return height(this.root()); 
-		
-		// TODO Auto-generated method stub	
 	}	
 	
 	@Override
@@ -90,25 +88,11 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return 1; 
 		else return numLeaves(this.root()); 		
 	}
-
-	public int leaves; 
-	public int numLeaves(Position <E> position) {
-		int subtree; 
-		
-		if (numChildren(position) == 0 ) {
-			leaves++; 
-			return 0;
-		}
-		for (int i = 0; i < numChildren(position); i++) {
-		subtree = 1 + numLeaves(position.getChildren().get(i));
-			}
-		return leaves; 
-	}
 	
 	
+	// TODO: Attention: NISAL fix this numLeaves method.
 	@Override
 	public int numLeaves(int depth) {
-
 		if (this.root() == null)
 			return 0; 
 		else if (!hasChildren(this.root())) 
@@ -148,24 +132,12 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	@Override
 	public boolean isBinary() {
-		if(this.root() == null){
-			// CHECK THIS:  Can an empty tree be binary??
-			return false;
-		}else if(numChildren(this.root())>2){
-			return false;
-		}
-		else{
-			return isBinary(this.root());
-		}
+		return isBinary(this.root());
 	}
 
 	@Override
 	public boolean isProperBinary() {
-		if(isBinary()){
-			return isProperBinary(this.root());
-		}else{
-			return false;
-		}
+		return isProperBinary(this.root());
 	}
 
 	@Override
@@ -311,16 +283,32 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	}
 	
 	/*
+	 *  numLeaves() helper method:
+	 */
+	public int leaves; 
+	public int numLeaves(Position <E> position) {
+		int subtree; 
+		
+		if (numChildren(position) == 0 ) {
+			leaves++; 
+			return 0;
+		}
+		for (int i = 0; i < numChildren(position); i++) {
+			subtree = 1 + numLeaves(position.getChildren().get(i));
+		}
+		return leaves; 
+	}
+	
+	/*
 	 * isBinary() helper method:
 	 */
 	private boolean isBinary(Position<E> position){
 		int numChilds = numChildren(position);
 		if(numChilds == 0){
 			return true;
-		}
-		else if(numChilds >= 2){
+		}else if(numChilds <=2){
 			for(int i=0; i < numChilds; i++){
-				isBinary(position.getChildren().get(i));
+				if(isBinary(position.getChildren().get(i))==false) return false;
 			}
 			return true;
 		}else{
@@ -339,7 +327,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return false;
 		}else if(numChilds == 2){
 			for(int i=0; i < 2; i++){
-				isProperBinary(position.getChildren().get(i));
+				if(isProperBinary(position.getChildren().get(i))==false) return false;
 			}
 			return true;
 		}else{

@@ -3,7 +3,9 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import simpletree.Position;
 import simpletree.SimplePosition;
@@ -14,209 +16,248 @@ public class MyTreeTest {
 
 	
 	// declare variables for test cases:
-	MyTree<String> tree = new MyTree<String>(); 
-	MyTree<String> secondtree = new MyTree<String>();
-
+	MyTree<String> justATree = new MyTree<String>();  // just a tree
+	MyTree<String> binaryTree = new MyTree<String>();  //Binary only
+	MyTree<String> bigBinaryTree = new MyTree<String>(); // Binary only, bigger
+	MyTree<String> bigProperTree = new MyTree<String>(); //ProperBinary
+	MyTree<String> completeTree = new MyTree<String>(); //Complete tree
+	MyTree<String> bigCompleteTree = new MyTree<String>(); //Complete tree
+	
+	// for first tree:
     Position<String> a = new SimplePosition<String>("a");
     Position<String> b = new SimplePosition<String>("b");
     Position<String> c = new SimplePosition<String>("c");
     Position<String> d = new SimplePosition<String>("d");
     // for second tree:
-    Position<String> aa = new SimplePosition<String>("aa");
-    Position<String> bb= new SimplePosition<String>("bb");
-    Position<String> cc = new SimplePosition<String>("cc");
-    Position<String> dd = new SimplePosition<String>("dd");
-    Position<String> e = new SimplePosition<String>("e");
-    Position<String> f = new SimplePosition<String>("f");
-    Position<String> g = new SimplePosition<String>("g");
-    Position<String> h = new SimplePosition<String>("h");
+    Position<String> aa = new SimplePosition<String>("a");
+    Position<String> bb= new SimplePosition<String>("b");
+    Position<String> cc = new SimplePosition<String>("c");
+    Position<String> dd = new SimplePosition<String>("d");
+    Position<String> ee = new SimplePosition<String>("e");
+    Position<String> ff = new SimplePosition<String>("f");
+    Position<String> gg = new SimplePosition<String>("g");
+    Position<String> hh = new SimplePosition<String>("h");
+    
+    // for thrid tree:
+    Position<String> aaa = new SimplePosition<String>("a");
+    Position<String> bbb= new SimplePosition<String>("b");
+    Position<String> ccc = new SimplePosition<String>("c");
+    Position<String> ddd = new SimplePosition<String>("d");
+    Position<String> eee = new SimplePosition<String>("e");
+    Position<String> fff = new SimplePosition<String>("f");
+    Position<String> ggg = new SimplePosition<String>("g");
+    Position<String> hhh = new SimplePosition<String>("h");
+    Position<String> iii = new SimplePosition<String>("i");
+    
+    // for fourth tree:
+    Position<String> aaaa = new SimplePosition<String>("a");
+    Position<String> bbbb= new SimplePosition<String>("b");
+    Position<String> cccc = new SimplePosition<String>("c");
+    Position<String> dddd = new SimplePosition<String>("d");
+    Position<String> eeee = new SimplePosition<String>("e");
+
+    // for fifth tree:
+    Position<String> a5 = new SimplePosition<String>("a");
+    Position<String> b5= new SimplePosition<String>("b");
+    Position<String> c5 = new SimplePosition<String>("c");
+    Position<String> d5 = new SimplePosition<String>("d");
+    Position<String> e5 = new SimplePosition<String>("e");
+    Position<String> f5 = new SimplePosition<String>("f");
+    Position<String> g5 = new SimplePosition<String>("g");
+    Position<String> h5 = new SimplePosition<String>("h");
+    Position<String> i5 = new SimplePosition<String>("i");
+    
+    // for just a tree:
+    Position<String> a6 = new SimplePosition<String>("a");
+    Position<String> b6= new SimplePosition<String>("b");
+    Position<String> c6 = new SimplePosition<String>("c");
+    Position<String> d6 = new SimplePosition<String>("d");
+    Position<String> e6 = new SimplePosition<String>("e");
+    Position<String> f6 = new SimplePosition<String>("f");
+    Position<String> g6 = new SimplePosition<String>("g");
+    Position<String> h6 = new SimplePosition<String>("h");
+    Position<String> i6 = new SimplePosition<String>("i");
+    Position<String> j6 = new SimplePosition<String>("j");
 	
 	@Before
 	public void setUp(){
-		// test tree1 one:
-		tree.setRoot(a);
-	    tree.insert(a, b);
-	    tree.insert(b, c);
-	    tree.insert(c, d);	
+		// binary only:
+		binaryTree.setRoot(a);
+		binaryTree.insert(a, b);
+		binaryTree.insert(b, c);
+		binaryTree.insert(c, d);
+		
+		//binary only:
+		bigBinaryTree.setRoot(aa);
+		bigBinaryTree.insert(aa,bb);
+		bigBinaryTree.insert(aa,cc);
+		bigBinaryTree.insert(bb,dd);
+		bigBinaryTree.insert(bb,ee);
+		bigBinaryTree.insert(ee,ff);
+		bigBinaryTree.insert(ee,gg);
+		bigBinaryTree.insert(cc,hh);
+		
+		// proper tree:
+		bigProperTree.setRoot(aaa);
+		bigProperTree.insert(aaa,bbb);
+		bigProperTree.insert(aaa,ccc);
+		bigProperTree.insert(bbb,ddd);
+		bigProperTree.insert(bbb,eee);
+		bigProperTree.insert(eee,fff);
+		bigProperTree.insert(eee,ggg);
+		bigProperTree.insert(ccc,hhh);
+		bigProperTree.insert(ccc,iii);
+		
+		// complete tree:
+		completeTree.setRoot(aaaa);
+		completeTree.insert(aaaa,bbbb);
+		completeTree.insert(aaaa,cccc);
+		completeTree.insert(bbbb,dddd);
+		completeTree.insert(bbbb,eeee);
+		
+		// big complete tree:
+		bigCompleteTree.setRoot(a5);
+		bigCompleteTree.insert(a5,b5);
+		bigCompleteTree.insert(a5,c5);
+		bigCompleteTree.insert(b5,d5);
+		bigCompleteTree.insert(b5,e5);
+		bigCompleteTree.insert(d5,f5);
+		bigCompleteTree.insert(c5,g5);
+		bigCompleteTree.insert(c5,h5);
+		
+		// just a tree:
+		justATree.setRoot(a6);
+		justATree.insert(a6,b6);
+		justATree.insert(a6,c6);
+		justATree.insert(b6,d6);
+		justATree.insert(b6,e6);
+		justATree.insert(b6,f6);
+		justATree.insert(d6,g6);
+		justATree.insert(d6,h6);
+		justATree.insert(c6,i6);
+		justATree.insert(c6,j6);
 	}
 	
-	@Before
-	public void setUp2(){
-		secondtree.setRoot(aa);
-		secondtree.insert(aa, bb);
-		secondtree.insert(aa, cc);
-		secondtree.insert(bb, dd);
-		secondtree.insert(bb, e);
-		secondtree.insert(e, f);
-		secondtree.insert(e, g);
-		secondtree.insert(cc, h);
-	}
-	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
 	
 	@Test
 	public void testConstruction() {
 		MyTree<Integer> tree = new MyTree<Integer>(); 
-		assertEquals(tree.root(), null); 
-		//fail("Not yet implemented");
+		assertEquals(tree.root(), null);
+		assertEquals(0, tree.size());
+		assertEquals(-1, tree.height());
 	}
 	
 	@Test
 	public void testInOrder() {
-		//assertEquals(Arrays.asList("d","c","b","a"), tree.inOrder());
+		
+		exception.expect(UnsupportedOperationException.class);
+		binaryTree.inOrder();
+		exception.expect(UnsupportedOperationException.class);
+		bigBinaryTree.inOrder();
+		
+		assertEquals(Arrays.asList("d","b","f","e","g","a","h","c","i"), bigProperTree.inOrder());
+		assertEquals(Arrays.asList("d","b","e","a","c"), completeTree.inOrder());
+		
+		exception.expect(UnsupportedOperationException.class);
+		bigCompleteTree.inOrder();
+		exception.expect(UnsupportedOperationException.class);
+		justATree.inOrder();
 	}
 	
 	@Test
 	public void testPostOrder() {
-		assertEquals(Arrays.asList("d","c","b","a"), tree.postOrder());
-		assertEquals(Arrays.asList("dd","f","g","e","bb","h","cc","aa"), secondtree.postOrder());
+		assertEquals(Arrays.asList("d","c","b","a"), binaryTree.postOrder());
+		assertEquals(Arrays.asList("d","f","g","e","b","h","c","a"), bigBinaryTree.postOrder());
+		
+		assertEquals(Arrays.asList("d","f","g","e","b","h","i","c","a"), bigProperTree.postOrder());
+		assertEquals(Arrays.asList("f","d","e","b","g","h","c","a"), bigCompleteTree.postOrder());
 	}
 	
 	@Test
 	public void testPreOrder() {
-		assertEquals(Arrays.asList("a","b","c","d"), tree.preOrder());
-		assertEquals(Arrays.asList("aa","bb","dd","e","f","g","cc","h"), secondtree.preOrder());
+		assertEquals(Arrays.asList("a","b","c","d"), binaryTree.preOrder());
+		assertEquals(Arrays.asList("a","b","d","e","f","g","c","h"), bigBinaryTree.preOrder());
+		
+		assertEquals(Arrays.asList("a","b","d","e","f","g","c","h","i"), bigProperTree.preOrder());
+		assertEquals(Arrays.asList("a","b","d","f","e","c","g","h"), bigCompleteTree.preOrder());
 		   
 	}
 	
 	@Test
 	public void testHeight() {
-		assertEquals(3, tree.height());
-		assertEquals(3, secondtree.height());
-	    
+		assertEquals(3, binaryTree.height());
+		assertEquals(3, bigBinaryTree.height());
+		assertEquals(3, bigProperTree.height());
+		assertEquals(2, completeTree.height());
+		assertEquals(3, bigCompleteTree.height());
+		assertEquals(3, justATree.height());
+		
+		MyTree<String> newtree = new MyTree<>();
+		Position<String> p1 = new SimplePosition<String>("p1");
+		
+		assertEquals(-1, newtree.height());
+		newtree.setRoot(p1);
+		assertEquals(0, newtree.height());
 	}
 	@Test
 	public void testHeightMaxDepth() {
-		MyTree<String> newtree = new MyTree<String>(); 
 		
-	
-	    Position<String> a = new SimplePosition<String>("a");
-	    Position<String> b = new SimplePosition<String>("b");
-	    Position<String> c = new SimplePosition<String>("c");
-	    Position<String> d = new SimplePosition<String>("d");
-	    Position<String> e = new SimplePosition<String>("e");
-	    Position<String> f = new SimplePosition<String>("f");
-	    Position<String> g = new SimplePosition<String>("g");
-	
-	    newtree.setRoot(a);
-	    newtree.insert(a, b);
-	    newtree.insert(a, c);
-	    newtree.insert(c, d);
-	    newtree.insert(a, e);
-	    newtree.insert(e, f);
-	    newtree.insert(f, g);
-
-	    //   System.out.println(tree.height(4)); 
+		fail("Not implemented yet");
 	    
 	}
 	@Test
 	public void testNumLeaves() {
-		MyTree<String> newtree = new MyTree<String>(); 
 		
-
-	    Position<String> a = new SimplePosition<String>("a");
-	    Position<String> b = new SimplePosition<String>("b");
-	    Position<String> c = new SimplePosition<String>("c");
-	    Position<String> d = new SimplePosition<String>("d");
-	    Position<String> e = new SimplePosition<String>("e");
-	    Position<String> f = new SimplePosition<String>("f");
-	    Position<String> g = new SimplePosition<String>("g");
-
-	    newtree.setRoot(a);
-	    newtree.insert(a, b);
-	    newtree.insert(a, c);
-	    newtree.insert(a, d);
-	    newtree.insert(a, e);
-	    newtree.insert(e, f);
-	 //   System.out.println(tree.size());
-	    newtree.insert(f, g);
-
-	 //   System.out.println(tree.numLeaves()); 
-	    
-	    //tests:
-	    assertEquals(1, tree.numLeaves());
-	    assertEquals(4, secondtree.numLeaves());
+		assertEquals(1, binaryTree.numLeaves());
+		assertEquals(4, bigBinaryTree.numLeaves());
+		assertEquals(5, bigProperTree.numLeaves());
+		assertEquals(3, completeTree.numLeaves());
+		assertEquals(4, bigCompleteTree.numLeaves());
+		assertEquals(6, justATree.numLeaves());
 	    
 	}
 
 	@Test 
 	public void testnumLeavesDepth() {
-		MyTree<String> newtree = new MyTree<String>(); 
-		
-		Position<String> a = new SimplePosition<String>("a");
-	    Position<String> b = new SimplePosition<String>("b");
-	    Position<String> c = new SimplePosition<String>("c");
-	    Position<String> d = new SimplePosition<String>("d");
-	    Position<String> e = new SimplePosition<String>("e");
-	    Position<String> f = new SimplePosition<String>("f");
-	    Position<String> g = new SimplePosition<String>("g");
-	    
-	    newtree.setRoot(a);
-	    newtree.insert(a, b);
-	    newtree.insert(b, c);
-	    newtree.insert(a, d);
-	    newtree.insert(d, e);
-	    newtree.insert(e, f);
-	 //   System.out.println(tree.size());
-	    newtree.insert(f, g);
-	    newtree.numLeaves(2); 
+		fail("Not implemented yet");
 		    
 	}
 	
 	@Test
 	public void testIsBinary(){
-		assertFalse(tree.isBinary());
-		assertTrue(secondtree.isBinary());
-		
-		MyTree<String> newtree = new MyTree<String>(); 
-		
-		Position<String> a = new SimplePosition<String>("a");
-	    Position<String> b = new SimplePosition<String>("b");
-	    Position<String> c = new SimplePosition<String>("c");
-	    Position<String> d = new SimplePosition<String>("d");
-	    Position<String> e = new SimplePosition<String>("e");
-	    Position<String> f = new SimplePosition<String>("f");
-	    Position<String> g = new SimplePosition<String>("g");
-	    Position<String> h = new SimplePosition<String>("h");
-
-	    newtree.setRoot(a);
-	    newtree.insert(a, b);
-	    newtree.insert(a, c);
-	    newtree.insert(b, d);
-	    newtree.insert(d, e);
-	    newtree.insert(e, f);
-	    newtree.insert(c, g);
-	    newtree.insert(c, h);
+		assertTrue(binaryTree.isBinary());
+		assertTrue(bigBinaryTree.isBinary());
+		assertTrue(bigProperTree.isBinary());
+	    assertTrue(completeTree.isBinary());
+	    assertTrue(bigCompleteTree.isBinary());
 	    
-	    assertTrue(newtree.isBinary());
-		
+	    assertFalse(justATree.isBinary());
+	    
 	}
 	
 	@Test
 	public void testIsProperBinary(){
-		assertFalse(tree.isProperBinary());
-		assertEquals(false, secondtree.isProperBinary()); // c has one child h, not two.
-		
-		MyTree<String> newtree = new MyTree<String>(); 
-		
-		Position<String> a = new SimplePosition<String>("a");
-	    Position<String> b = new SimplePosition<String>("b");
-	    Position<String> c = new SimplePosition<String>("c");
-	    Position<String> d = new SimplePosition<String>("d");
-	    Position<String> e = new SimplePosition<String>("e");
-	    Position<String> f = new SimplePosition<String>("f");
-	    Position<String> g = new SimplePosition<String>("g");
-	    Position<String> h = new SimplePosition<String>("h");
+		assertFalse(justATree.isProperBinary());
+		assertFalse(binaryTree.isProperBinary());
+		assertFalse(bigBinaryTree.isProperBinary());
+	    assertFalse(bigCompleteTree.isProperBinary());
 	    
-	    newtree.setRoot(a);
-	    newtree.insert(a, b);
-	    newtree.insert(a, c);
-	    newtree.insert(b, d);
-	    newtree.insert(b, e);
-	    newtree.insert(d, f);
-	    newtree.insert(d, g);
-	    //newtree.insert(c, h);
+	    assertTrue(bigProperTree.isProperBinary());
+	    assertTrue(completeTree.isProperBinary());
+	}
+	
+	@Test
+	public void testIsCompleteBinary(){
+		assertFalse(justATree.isCompleteBinary());
+		assertFalse(binaryTree.isCompleteBinary());
+		assertFalse(bigBinaryTree.isCompleteBinary());
 	    
-	    assertTrue(newtree.isProperBinary());
+		assertTrue(bigCompleteTree.isCompleteBinary());
+	    assertTrue(bigProperTree.isCompleteBinary());
+	    assertTrue(completeTree.isCompleteBinary());
 	}
 	
 

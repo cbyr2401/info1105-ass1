@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import interfaces.Tree;
@@ -75,9 +76,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return -1;   
 		else
 			return height(this.root(), maxDepth); 
-	
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -89,41 +87,17 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		else return numLeaves(this.root()); 		
 	}
 	
-	
-	// TODO: Attention: NISAL fix this numLeaves method.
 	@Override
 	public int numLeaves(int depth) {
 		if (this.root() == null)
 			return 0; 
 		else if (!hasChildren(this.root())) 
-			return 1; 
-		else return numLeaves(this.root(), depth); 
-		//System.out.println(leaves); 
-		
-		// TODO Auto-generated method stub
-		
+			return 1;
+		else{
+			return numLeaves(this.root(), depth);
+		}		
 	}
 	
-	public int numLeaves(Position <E> position, int depth) {
-		int subtree; 
-		System.out.println("hey");
-		if (numChildren(position) == 0 ) {
-			leaves++; 
-			return 0;
-		}
-		subtree = 1 + numLeaves(position.getChildren().get(0), depth);
-	//	for (int i = 0; i < numChildren(position); i++) {
-			
-	
-	//	
-		//System.out.println("hey");
-		
-	//		}
-		
-		
-		return leaves; 
-	}
-
 	@Override
 	public int numPositions(int depth) {
 		// TODO Auto-generated method stub
@@ -285,18 +259,35 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	/*
 	 *  numLeaves() helper method:
 	 */
-	public int leaves; 
 	public int numLeaves(Position <E> position) {
-		int subtree; 
-		
+		int leaves = 0;
 		if (numChildren(position) == 0 ) {
-			leaves++; 
-			return 0;
+			return 1;
 		}
 		for (int i = 0; i < numChildren(position); i++) {
-			subtree = 1 + numLeaves(position.getChildren().get(i));
+			leaves += numLeaves(position.getChildren().get(i)); //subtree = 1 + 
 		}
 		return leaves; 
+	}
+	
+	/*
+	 * numLeaves(int maxDepth) helper method.
+	 * NOTE:  Return ONLY numLeaves at the specified depth
+	 */
+	public int numLeaves(Position <E> position, int depth) {
+		int leaves = 0;
+		if(depth == 0 && numChildren(position)==0){
+			// is a leaf at the right level
+			return 1;
+		}else if(depth == 0){
+			// is not a leaf but at the right level
+			return 0;
+		}else{
+			for(int i=0; i < numChildren(position); i++){
+				leaves += numLeaves(position.getChildren().get(i), depth-1);
+			}
+			return leaves;
+		}
 	}
 	
 	/*

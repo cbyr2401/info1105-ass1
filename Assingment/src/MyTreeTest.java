@@ -259,6 +259,10 @@ public class MyTreeTest {
 
 	@Test 
 	public void testnumLeavesDepth() {
+		/*
+		 * Return ONLY numLeaves at the specified depth
+		 */
+		
 		assertEquals(0, binaryTree.numLeaves(1));
 		assertEquals(0, bigBinaryTree.numLeaves(1));
 		assertEquals(0, bigProperTree.numLeaves(1));
@@ -269,17 +273,17 @@ public class MyTreeTest {
 		assertEquals(0, binaryTree.numLeaves(2));
 		assertEquals(2, bigBinaryTree.numLeaves(2));
 		assertEquals(3, bigProperTree.numLeaves(2));
-		assertEquals(3, completeTree.numLeaves(2));
+		assertEquals(2, completeTree.numLeaves(2));
 		assertEquals(3, bigCompleteTree.numLeaves(2));
 		assertEquals(4, justATree.numLeaves(2));
 		
-		// should return the actual numLeaves of the tree:		
-		assertEquals(binaryTree.numLeaves(), binaryTree.numLeaves(4));
-		assertEquals(bigBinaryTree.numLeaves(), bigBinaryTree.numLeaves(4));
-		assertEquals(bigProperTree.numLeaves(), bigProperTree.numLeaves(4));
-		assertEquals(completeTree.numLeaves(), completeTree.numLeaves(4));
-		assertEquals(bigCompleteTree.numLeaves(), bigCompleteTree.numLeaves(4));
-		assertEquals(justATree.numLeaves(), justATree.numLeaves(4));
+		// should return the 0 leaves, as the tree is too big for that.:		
+		assertEquals(0, binaryTree.numLeaves(4));
+		assertEquals(0, bigBinaryTree.numLeaves(4));
+		assertEquals(0, bigProperTree.numLeaves(4));
+		assertEquals(0, completeTree.numLeaves(4));
+		assertEquals(0, bigCompleteTree.numLeaves(4));
+		assertEquals(0, justATree.numLeaves(4));
 		
 		// test zero:
 		assertEquals(0, binaryTree.numLeaves(0));

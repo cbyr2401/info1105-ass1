@@ -117,6 +117,41 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	@Override
 	public boolean isCompleteBinary() {
 		// TODO Auto-generated method stub
+		if(isProperBinary(this.root())==false){
+			return false;
+		}else{
+			return isCompleteBinary(this.root());
+		}
+	}
+	
+	/*
+	 * isCompleteBinary() helper method:
+	 */
+	public boolean isCompleteBinary(Position<E> node){
+		int childs = numChildren(node);
+
+		if(childs==1){
+			// has one child, can still be complete if position's child
+			//  does not have children AND it is on the left with no children of its own.
+			if(node.getParent().getChildren().get(0) != null && numChildren(node.getChildren().get(0))==0){
+				return true;
+			}else{
+				return false;
+			}
+		}else if(childs == 2){
+			for(int i=0; i < 2; i++){
+				return isCompleteBinary(node.getChildren().get(i));
+			}
+		}else if(childs==0){
+			// is a leaf
+			if(node.getParent().getParent().getChildren().get(0).getChildren().get(0) != null && node.getParent().getParent().getChildren().get(0).getChildren().get(1) != null){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
 		return false;
 	}
 

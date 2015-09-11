@@ -332,10 +332,11 @@ public class MyTreeTest {
 		assertFalse(justATree.isCompleteBinary());
 		assertFalse(binaryTree.isCompleteBinary());
 		assertFalse(bigBinaryTree.isCompleteBinary());
+		
+		assertTrue(completeTree.isCompleteBinary());
+	    assertFalse(bigProperTree.isCompleteBinary());
+	    assertTrue(bigCompleteTree.isCompleteBinary());
 	    
-		assertTrue(bigCompleteTree.isCompleteBinary());
-	    assertTrue(bigProperTree.isCompleteBinary());
-	    assertTrue(completeTree.isCompleteBinary());
 	}
 	
 

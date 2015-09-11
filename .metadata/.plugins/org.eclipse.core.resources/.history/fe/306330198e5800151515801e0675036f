@@ -340,7 +340,7 @@ public class MyTreeTest {
 	    Position<String> e = new SimplePosition<String>("e");
 	    Position<String> f = new SimplePosition<String>("f");
 	    Position<String> g = new SimplePosition<String>("g");
-
+	    Position<String> h = new SimplePosition<String>("h");
 	    
 	    balancedTree.setRoot(a);
 	    balancedTree.insert(a, b);
@@ -361,23 +361,6 @@ public class MyTreeTest {
 	    assertFalse(bigProperTree.isCompleteBinary());
 	    assertTrue(bigCompleteTree.isCompleteBinary());
 	    
-	}
-	
-	@Test
-	public void testIsArithmetic() {
-		MyTree<String> tree = new MyTree<String>();
-		Position<String> a = new SimplePosition<String>("+");
-		Position<String> b = new SimplePosition<String>("1");
-		Position<String> c = new SimplePosition<String>("2");
-		
-	//	Position<String> d = new SimplePosition<String>("d");
-		
-		tree.setRoot(a);
-		tree.insert(a, b);
-		tree.insert(a, c);
-		assertTrue(tree.isArithmetic()); 
-	//	assertTrue(MyTree.isNumeric("2")); 
-	//	assertTrue(MyTree.isOperator("+a")); 
 	}
 	
 

@@ -47,9 +47,98 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	@Override
 	public boolean isArithmetic() {
-		// TODO Auto-generated method stub
-		return false;
+
+		if (!this.isProperBinary()) {
+			System.out.println("falseProper");
+			return false;
+
+		} else if (operatorChecker(this.root()) != 1) {
+			System.out.println("falseOperator");
+			return false;
+		}
+
+		else if (intChecker(this.root()) != 1) {
+			System.out.println("falseInt");
+			return false;
+		} else
+			return true;
 	}
+
+	// checker for internal nodes
+
+	int counter = 0;
+	int internalNodes = 0;
+
+	public int operatorChecker(Position<E> node) {
+		if (numChildren(node) == 0) {
+			return 1;
+		}
+		if (numChildren(node) != 0) {
+			internalNodes++;
+			if (isOperator(node.getElement().toString())) {
+				counter++;
+			}
+		}
+
+		for (int i = 0; i < numChildren(node); i++) {
+			numLeaves(node.getChildren().get(i));
+		}
+
+		// if counter == number of internal nodes return true
+		if (counter == internalNodes)
+			return 1;
+		else
+			return 0;
+
+	}
+
+	// checker for leaves
+	int NewCounter = 0;
+	public int intChecker(Position<E> node) {
+		int leaves = 0;
+		if (numChildren(node) == 0) {
+
+			if (isNumeric(node.getElement().toString())) {
+				NewCounter++;
+			}
+			return 1;
+		}
+
+		for (int i = 0; i < numChildren(node); i++) {
+			leaves += intChecker(node.getChildren().get(i)); // subtree = 1 +
+		}
+
+		if (leaves == NewCounter)
+			return 1;
+		else
+			return 0;
+
+	}
+
+	public static boolean isNumeric(String str) {
+		try {
+			Double.parseDouble(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isOperator(String str) {
+		char[] array = new char[1];
+		array = str.toCharArray();
+		if (array.length > 1)
+			return false;
+		if (array[0] == '+' || array[0] == '-' || array[0] == '/'
+				|| array[0] == '*')
+			return true;
+		else
+			return false;
+	}
+	
+	// END NJ HELPER METHODS FOR isArithmetic()
+	// END NJ HELPER METHODS FOR isArithmetic()
+	// END NJ HELPER METHODS FOR isArithmetic()
 
 	@Override
 	public double evaluateArithmetic() {
@@ -117,9 +206,14 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	@Override
 	public boolean isCompleteBinary() {
 		// TODO Auto-generated method stub
-		if(isProperBinary(this.root())==false){
+		if(isBinary(this.root())==false){
 			return false;
+		}else if(numChildren(this.root())==0){
+			return true;
 		}else{
+			int h = height();
+			//for 'perfect' tree
+			if(numLeaves(h)==Math.pow(2, h)) return true;
 			return isCompleteBinary(this.root());
 		}
 	}
@@ -129,30 +223,44 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	 */
 	public boolean isCompleteBinary(Position<E> node){
 		int childs = numChildren(node);
-
-		if(childs==1){
-			// has one child, can still be complete if position's child
-			//  does not have children AND it is on the left with no children of its own.
-			if(node.getParent().getChildren().get(0) != null && numChildren(node.getChildren().get(0))==0){
-				return true;
-			}else{
+		if(childs == 0){
+			// that's also nice... there's nothing below it... but what does that mean?
+			return true;
+		}else if(childs == 1){
+			/* this is not nice... 
+			 *  there are three outcomes:
+			 *    1. the child has children > bad, just fail
+			 *    2. the child is on the right > bad [but doesn't matter because we can't tell]
+			 *    3. the child is on the left > good, if no children
+			 */
+			if(node.getChildren().get(0).getChildren().size() > 0){
+				// deals with option 1.
 				return false;
-			}
-		}else if(childs == 2){
-			for(int i=0; i < 2; i++){
-				return isCompleteBinary(node.getChildren().get(i));
-			}
-		}else if(childs==0){
-			// is a leaf
-			if(node.getParent().getParent().getChildren().get(0).getChildren().get(0) != null && node.getParent().getParent().getChildren().get(0).getChildren().get(1) != null){
-				return true;
 			}else{
-				return false;
+				return true;
 			}
 		}else{
-			return false;
-		}
-		return false;
+			/* childs == 2 > that's nice, keep going:
+			 *    There are two outcomes here:
+			 *       1. node goes down the left > good
+			 *       2. node goes down the right > bad
+			 */
+			if(node.getChildren().get(0) != null){
+				// case 1
+				return isCompleteBinary(node.getChildren().get(0));
+			}
+			if(node.getChildren().get(1) != null){
+				// case 2
+				// need to check if gone left as well, if it hasn't we are in trouble.
+				if(numChildren(node.getParent().getChildren().get(0)) == 0) return false;
+				return isCompleteBinary(node.getChildren().get(1));
+				
+			}
+			for(Position<E> child : node.getChildren()){
+				if(isCompleteBinary(child)==false) return false;
+			}
+			return true;
+		}		
 	}
 
 	@Override

@@ -363,22 +363,5 @@ public class MyTreeTest {
 	    
 	}
 	
-	@Test
-	public void testIsArithmetic() {
-		MyTree<String> tree = new MyTree<String>();
-		Position<String> a = new SimplePosition<String>("+");
-		Position<String> b = new SimplePosition<String>("1");
-		Position<String> c = new SimplePosition<String>("2");
-		
-	//	Position<String> d = new SimplePosition<String>("d");
-		
-		tree.setRoot(a);
-		tree.insert(a, b);
-		tree.insert(a, c);
-		assertTrue(tree.isArithmetic()); 
-	//	assertTrue(MyTree.isNumeric("2")); 
-	//	assertTrue(MyTree.isOperator("+a")); 
-	}
-	
 
 }

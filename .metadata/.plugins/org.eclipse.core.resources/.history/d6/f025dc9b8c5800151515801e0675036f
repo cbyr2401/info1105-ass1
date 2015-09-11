@@ -22,7 +22,7 @@ public class MyTreeTest {
 	MyTree<String> bigProperTree = new MyTree<String>(); //ProperBinary
 	MyTree<String> completeTree = new MyTree<String>(); //Complete tree
 	MyTree<String> bigCompleteTree = new MyTree<String>(); //Complete tree
-	
+	MyTree<String> balancedTree = new MyTree<String>(); //Balanced and complete tree
 	
 	// for first tree:
     Position<String> a = new SimplePosition<String>("a");
@@ -330,30 +330,7 @@ public class MyTreeTest {
 	
 	@Test
 	public void testIsCompleteBinary(){
-		
-		MyTree<String> balancedTree = new MyTree<String>(); //Balanced and complete tree
-		
-		Position<String> a = new SimplePosition<String>("a");
-	    Position<String> b= new SimplePosition<String>("b");
-	    Position<String> c = new SimplePosition<String>("c");
-	    Position<String> d = new SimplePosition<String>("d");
-	    Position<String> e = new SimplePosition<String>("e");
-	    Position<String> f = new SimplePosition<String>("f");
-	    Position<String> g = new SimplePosition<String>("g");
-
-	    
-	    balancedTree.setRoot(a);
-	    balancedTree.insert(a, b);
-	    balancedTree.insert(a, c);
-	    balancedTree.insert(b, d);
-	    balancedTree.insert(b, e);
-	    balancedTree.insert(c, f);
-	    balancedTree.insert(c, g);
-	    
-	    
-		
 		assertFalse(justATree.isCompleteBinary());
-		assertTrue(balancedTree.isCompleteBinary());
 		assertFalse(binaryTree.isCompleteBinary());
 		assertFalse(bigBinaryTree.isCompleteBinary());
 		
@@ -361,23 +338,6 @@ public class MyTreeTest {
 	    assertFalse(bigProperTree.isCompleteBinary());
 	    assertTrue(bigCompleteTree.isCompleteBinary());
 	    
-	}
-	
-	@Test
-	public void testIsArithmetic() {
-		MyTree<String> tree = new MyTree<String>();
-		Position<String> a = new SimplePosition<String>("+");
-		Position<String> b = new SimplePosition<String>("1");
-		Position<String> c = new SimplePosition<String>("2");
-		
-	//	Position<String> d = new SimplePosition<String>("d");
-		
-		tree.setRoot(a);
-		tree.insert(a, b);
-		tree.insert(a, c);
-		assertTrue(tree.isArithmetic()); 
-	//	assertTrue(MyTree.isNumeric("2")); 
-	//	assertTrue(MyTree.isOperator("+a")); 
 	}
 	
 

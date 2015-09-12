@@ -195,20 +195,28 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	@Override
 	public boolean isBinary() {
-		return isBinary(this.root());
+		if(root()==null){
+			return true;
+		}else{
+			return isBinary(this.root());
+		}		
 	}
 
 	@Override
 	public boolean isProperBinary() {
-		return isProperBinary(this.root());
+		if(root()==null){
+			return true;
+		}else{
+			return isProperBinary(this.root());
+		}
 	}
 
 	@Override
 	public boolean isCompleteBinary() {
-		// TODO Auto-generated method stub
-		if(isBinary(this.root())==false){
-			return false;
-		}else if(numChildren(this.root())==0){
+		if(root()==null){
+			return true;
+		}
+		if(numChildren(this.root())==0){
 			return true;
 		}else{
 			int h = height();
@@ -280,7 +288,16 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	@Override
 	public List<E> inOrder() {
 		List<E> list = new ArrayList<E>();
-		return inorder(this.root(), list);
+		if(root()==null){
+			return list;
+		}else{
+			if(isProperBinary()){
+				return inorder(this.root(), list);
+			}else{
+				throw new UnsupportedOperationException();
+			}
+		}
+		
 	}
 	
 	// HELPER METHODS:
@@ -326,19 +343,14 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	 * InOrder traversal method:
 	 */
 	private List<E> inorder(Position<E> node, List<E> list){
-		if(isProperBinary()){
-			if(node.getChildren().get(0) != null){
-				inorder(node.getChildren().get(0), list);
-			}
-			list.add(node.getElement());
-			if(node.getChildren().get(1) != null){
-				inorder(node.getChildren().get(1), list);
-			}
-		}else{
-			throw new UnsupportedOperationException();
+		if(numChildren(node)>0 && node.getChildren().get(0) != null){
+			inorder(node.getChildren().get(0), list);
 		}
-		
-		return null;
+		list.add(node.getElement());
+		if(numChildren(node)>1 && node.getChildren().get(1) != null){
+			inorder(node.getChildren().get(1), list);
+		}		
+		return list;
 	}
 	
 	/*

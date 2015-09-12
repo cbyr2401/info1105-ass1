@@ -166,16 +166,7 @@ public class MyTreeTest {
 		
 		//for bigArithmeticTree:
 		bigArithmeticTree.setRoot(a8);
-		bigArithmeticTree.insert(a8, b8);
-		bigArithmeticTree.insert(a8, g8);
-		bigArithmeticTree.insert(b8, c8);
-		bigArithmeticTree.insert(b8, d8);
-		bigArithmeticTree.insert(c8, e8);
-		bigArithmeticTree.insert(c8, f8);
-		bigArithmeticTree.insert(g8, h8);
-		bigArithmeticTree.insert(g8, i8);
-		
-		
+		bigArithmeticTree.insert(a8, child);
 	}
 	
 	@Rule
@@ -404,15 +395,17 @@ public class MyTreeTest {
 	
 	@Test
 	public void testIsArithmetic() {
+		MyTree<String> tree = new MyTree<String>();
+		Position<String> a = new SimplePosition<String>("+");
+		Position<String> b = new SimplePosition<String>("1");
+		Position<String> c = new SimplePosition<String>("2");
 		
-		assertTrue(arithmeticTree.isArithmetic());
-		assertTrue(bigArithmeticTree.isArithmetic());
+	//	Position<String> d = new SimplePosition<String>("d");
 		
-		assertFalse(bigBinaryTree.isArithmetic());
-		assertFalse(binaryTree.isArithmetic());
-		assertFalse(bigCompleteTree.isArithmetic());
-		assertFalse(completeTree.isArithmetic());
-		assertFalse(bigProperTree.isArithmetic());
+		tree.setRoot(a);
+		tree.insert(a, b);
+		tree.insert(a, c);
+		assertTrue(tree.isArithmetic()); 
 	//	assertTrue(MyTree.isNumeric("2")); 
 	//	assertTrue(MyTree.isOperator("+a")); 
 	}

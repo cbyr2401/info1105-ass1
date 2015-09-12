@@ -219,48 +219,19 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	}
 	
 	/*
-	 * isCompleteBinary() helper method:
+	 * isCompleteBinary() helper method - version 5:
 	 */
 	public boolean isCompleteBinary(Position<E> node){
-		int childs = numChildren(node);
-		if(childs == 0){
-			// that's also nice... there's nothing below it... but what does that mean?
-			return true;
-		}else if(childs == 1){
-			/* this is not nice... 
-			 *  there are three outcomes:
-			 *    1. the child has children > bad, just fail
-			 *    2. the child is on the right > bad [but doesn't matter because we can't tell]
-			 *    3. the child is on the left > good, if no children
-			 */
-			if(node.getChildren().get(0).getChildren().size() > 0){
-				// deals with option 1.
-				return false;
-			}else{
-				return true;
-			}
-		}else{
-			/* childs == 2 > that's nice, keep going:
-			 *    There are two outcomes here:
-			 *       1. node goes down the left > good
-			 *       2. node goes down the right > bad
-			 */
+		//int childs = numChildren(node);
+		int height = height();
+		int leftMost = 0;
+		for(int i=0; i < height; i++){
 			if(node.getChildren().get(0) != null){
-				// case 1
-				return isCompleteBinary(node.getChildren().get(0));
+				leftMost++;
 			}
-			if(node.getChildren().get(1) != null){
-				// case 2
-				// need to check if gone left as well, if it hasn't we are in trouble.
-				if(numChildren(node.getParent().getChildren().get(0)) == 0) return false;
-				return isCompleteBinary(node.getChildren().get(1));
-				
-			}
-			for(Position<E> child : node.getChildren()){
-				if(isCompleteBinary(child)==false) return false;
-			}
-			return true;
-		}		
+		}
+		
+		return false;
 	}
 
 	@Override

@@ -222,16 +222,30 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	 * isCompleteBinary() helper method - version 5:
 	 */
 	public boolean isCompleteBinary(Position<E> node){
-		//int childs = numChildren(node);
-		int height = height();
-		int leftMost = 0;
-		for(int i=0; i < height; i++){
-			if(node.getChildren().get(0) != null){
-				leftMost++;
+		int numchilds = numChildren(node);
+		if(numchilds==0){
+			return true;
+		}
+		if(numchilds==1){
+			if(size(node.getChildren().get(0)) == 0){
+				return true;
+			}else if(size(node.getChildren().get(0))==1){
+				return true;
+			}
+			else{
+				return false;
 			}
 		}
-		
-		return false;
+		if(numchilds==2){
+			List<Position<E>> childs = node.getChildren();
+			if(size(childs.get(0)) < size(childs.get(1))){
+				return false;
+			}else{
+				return isCompleteBinary(childs.get(0));
+			}
+		}else{
+			return false;
+		}
 	}
 
 	@Override
@@ -439,5 +453,4 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return false;
 		}
 	}
-
 }

@@ -424,10 +424,6 @@ public class MyTreeTest {
 	    anotherNotCompleteTree.insert(b2, e2);
 	    anotherNotCompleteTree.insert(c2, f2);
 	    anotherNotCompleteTree.insert(d2, g2);
-	    anotherNotCompleteTree.insert(d2, h2);
-	    anotherNotCompleteTree.insert(e2, i2);
-	    anotherNotCompleteTree.insert(e2, j2);
-	    
 	    
 		
 		assertFalse(justATree.isCompleteBinary());
@@ -439,7 +435,6 @@ public class MyTreeTest {
 	    assertFalse(bigProperTree.isCompleteBinary());
 	    assertTrue(bigCompleteTree.isCompleteBinary());
 	    assertFalse(notCompleteTree.isCompleteBinary());
-	    assertFalse(anotherNotCompleteTree.isCompleteBinary());
 	    
 	}
 	

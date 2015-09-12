@@ -372,7 +372,6 @@ public class MyTreeTest {
 		
 		MyTree<String> balancedTree = new MyTree<String>(); //Balanced and complete tree
 		MyTree<String> notCompleteTree = new MyTree<String>(); //not a complete tree
-		MyTree<String> anotherNotCompleteTree = new MyTree<String>(); //not a complete tree
 		
 		Position<String> a = new SimplePosition<String>("a");
 	    Position<String> b= new SimplePosition<String>("b");
@@ -389,17 +388,7 @@ public class MyTreeTest {
 	    Position<String> e1 = new SimplePosition<String>("e");
 	    Position<String> f1 = new SimplePosition<String>("f");
 	    Position<String> g1 = new SimplePosition<String>("g");
-	    	
-	    Position<String> a2 = new SimplePosition<String>("a");
-	    Position<String> b2= new SimplePosition<String>("b");
-	    Position<String> c2 = new SimplePosition<String>("c");
-	    Position<String> d2 = new SimplePosition<String>("d");
-	    Position<String> e2 = new SimplePosition<String>("e");
-	    Position<String> f2 = new SimplePosition<String>("f");
-	    Position<String> g2 = new SimplePosition<String>("g");
-	    Position<String> h2 = new SimplePosition<String>("h");
-	    Position<String> i2 = new SimplePosition<String>("i");
-	    Position<String> j2 = new SimplePosition<String>("j");
+
 	    
 	    balancedTree.setRoot(a);
 	    balancedTree.insert(a, b);
@@ -417,17 +406,6 @@ public class MyTreeTest {
 	    notCompleteTree.insert(d1, f1);
 	    notCompleteTree.insert(d1, g1);
 	    
-	    anotherNotCompleteTree.setRoot(a2);
-	    anotherNotCompleteTree.insert(a2, b2);
-	    anotherNotCompleteTree.insert(a2, c2);
-	    anotherNotCompleteTree.insert(b2, d2);
-	    anotherNotCompleteTree.insert(b2, e2);
-	    anotherNotCompleteTree.insert(c2, f2);
-	    anotherNotCompleteTree.insert(d2, g2);
-	    anotherNotCompleteTree.insert(d2, h2);
-	    anotherNotCompleteTree.insert(e2, i2);
-	    anotherNotCompleteTree.insert(e2, j2);
-	    
 	    
 		
 		assertFalse(justATree.isCompleteBinary());
@@ -439,7 +417,6 @@ public class MyTreeTest {
 	    assertFalse(bigProperTree.isCompleteBinary());
 	    assertTrue(bigCompleteTree.isCompleteBinary());
 	    assertFalse(notCompleteTree.isCompleteBinary());
-	    assertFalse(anotherNotCompleteTree.isCompleteBinary());
 	    
 	}
 	

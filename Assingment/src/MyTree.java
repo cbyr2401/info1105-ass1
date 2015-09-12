@@ -45,96 +45,96 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		return 0;
 	}
 
-	@Override
-	public boolean isArithmetic() {
+	//@Override
+	
+	
+		int NewCounter = 0;
+		public boolean isArithmetic() {
+			NewCounter = 0; 
+			if (!this.isProperBinary()) {
+				System.out.println("falseProper");
+				return false;
 
-		if (!this.isProperBinary()) {
-			System.out.println("falseProper");
-			return false;
-
-		} else if (operatorChecker(this.root()) != 1) {
-			System.out.println("falseOperator");
-			return false;
-		}
-
-		else if (intChecker(this.root()) != 1) {
-			System.out.println("falseInt");
-			return false;
-		} else
-			return true;
-	}
-
-	// checker for internal nodes
-
-	int counter = 0;
-	int internalNodes = 0;
-
-	public int operatorChecker(Position<E> node) {
-		if (numChildren(node) == 0) {
-			return 1;
-		}
-		if (numChildren(node) != 0) {
-			internalNodes++;
-			if (isOperator(node.getElement().toString())) {
-				counter++;
+			} else if (operatorChecker(this.root()) != 1) {
+				System.out.println("falseOperator");
+				return false;
 			}
+			else if (intChecker(this.root()) != 1) {
+			
+				return false;
+			} else
+				return true;
 		}
 
-		for (int i = 0; i < numChildren(node); i++) {
-			numLeaves(node.getChildren().get(i));
-		}
+		// checker for internal nodes
 
-		// if counter == number of internal nodes return true
-		if (counter == internalNodes)
-			return 1;
-		else
-			return 0;
+		int counter = 0;
+		int internalNodes = 0;
 
-	}
-
-	// checker for leaves
-	int NewCounter = 0;
-	public int intChecker(Position<E> node) {
-		int leaves = 0;
-		if (numChildren(node) == 0) {
-
-			if (isNumeric(node.getElement().toString())) {
-				NewCounter++;
+		public int operatorChecker(Position<E> node) {
+			if (numChildren(node) == 0) {
+				return 1;
 			}
-			return 1;
+			if (numChildren(node) != 0) {
+				internalNodes++;
+				if (isOperator(node.getElement().toString())) {
+					counter++;
+				}
+			}
+
+			for (int i = 0; i < numChildren(node); i++) {
+				numLeaves(node.getChildren().get(i));
+			}
+
+			// if counter == number of internal nodes return true
+			if (counter == internalNodes)
+				return 1;
+			else
+				return 0;
+
 		}
 
-		for (int i = 0; i < numChildren(node); i++) {
-			leaves += intChecker(node.getChildren().get(i)); // subtree = 1 +
+		// checker for leaves
+		
+
+		
+		public int intChecker(Position<E> node) {
+			if (numChildren(node) == 0 && isNumeric(node.getElement().toString())) {
+				NewCounter++;	
+				return 1;			
+			}
+			else if (numChildren(node) == 0)
+				return 1;
+			
+			for (int i = 0; i < numChildren(node); i++) {
+			 intChecker(node.getChildren().get(i)); // subtree = 1 +
+			}
+			if (NewCounter == this.numLeaves())
+				return 1;
+			else 
+				return 0;
 		}
 
-		if (leaves == NewCounter)
-			return 1;
-		else
-			return 0;
-
-	}
-
-	public static boolean isNumeric(String str) {
-		try {
-			Double.parseDouble(str);
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean isOperator(String str) {
-		char[] array = new char[1];
-		array = str.toCharArray();
-		if (array.length > 1)
-			return false;
-		if (array[0] == '+' || array[0] == '-' || array[0] == '/'
-				|| array[0] == '*')
+		public static boolean isNumeric(String str) {
+			try {
+				Double.parseDouble(str);
+			} catch (NumberFormatException nfe) {
+				return false;
+			}
 			return true;
-		else
-			return false;
-	}
+		}
+
+		public static boolean isOperator(String str) {
+			char[] array = new char[1];
+			array = str.toCharArray();
+			if (array.length > 1)
+				return false;
+			if (array[0] == '+' || array[0] == '-' || array[0] == '/'
+					|| array[0] == '*')
+				return true;
+			else
+				return false;
+		}
 	
 	// END NJ HELPER METHODS FOR isArithmetic()
 	// END NJ HELPER METHODS FOR isArithmetic()

@@ -231,14 +231,13 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 				return true;
 			}else if(size(node.getChildren().get(0))==1){
 				return true;
-			}
-			else{
+			}else{
 				return false;
 			}
 		}
 		if(numchilds==2){
 			List<Position<E>> childs = node.getChildren();
-			if(size(childs.get(0)) < size(childs.get(1))){
+			if(size(childs.get(0)) < size(childs.get(1)) || size(childs.get(0)) - size(childs.get(1)) > 2){
 				return false;
 			}else{
 				return isCompleteBinary(childs.get(0));

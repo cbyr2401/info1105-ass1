@@ -49,9 +49,13 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	
 	
 		int NewCounter = 0;
+		@Override
 		public boolean isArithmetic() {
-			NewCounter = 0; 
-			if (!this.isProperBinary()) {
+			NewCounter = 0;
+			if(root()==null || numChildren(root())==0){
+				return false;
+			}
+			if (!isProperBinary()) {
 				System.out.println("falseProper");
 				return false;
 

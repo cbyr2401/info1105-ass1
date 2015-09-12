@@ -45,21 +45,15 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		return 0;
 	}
 
-	//@Override
-	
 	
 		int NewCounter = 0;
 		@Override
 		public boolean isArithmetic() {
 			NewCounter = 0;
-			if(root()==null || numChildren(root())==0){
+			if(root()==null || numChildren(root())==0 || !isProperBinary()){
 				return false;
 			}
-			if (!isProperBinary()) {
-				System.out.println("falseProper");
-				return false;
-
-			} else if (operatorChecker(this.root()) != 1) {
+			else if (operatorChecker(this.root()) != 1) {
 				System.out.println("falseOperator");
 				return false;
 			}
@@ -146,8 +140,62 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	@Override
 	public double evaluateArithmetic() {
-		// TODO Auto-generated method stub
+		// TODO Fix.  This is not working.
+		if(isArithmetic()){
+			List<E> inorder = inOrder();
+			
+			// convert to string list:
+			List<String> strMaths = new ArrayList<>();
+			
+			for(E element : inorder){
+				strMaths.add(element.toString());
+			}
+			
+			double result = 0;
+			String num1 = null;
+			String num2 = null;
+			String operand = null;
+			for(String element : strMaths){
+				if(num1 == null  && isNumeric(element)){
+					if(result == 0){
+						result = Double.parseDouble(element);
+						num1 = element;
+					}else{
+						num1 = element;
+					}
+					//
+					num1 = element;
+				}else if(num2 == null && isNumeric(element)){
+					num2 = element;
+				}else if(operand == null && isOperator(element)){
+					operand = element; 
+				}else if(num1 != null && num2 != null && operand != null){
+					result = ALU(Double.parseDouble(num1), operand, num2);
+					num1 = null;
+					num2 = null;
+					operand = null;
+				}
+			}
+			System.out.println(strMaths.toString());
+			return result;
+			
+		}
 		return 0;
+	}
+	
+	// method for performing operations:
+	public double ALU(double num1, String operand, String num2){
+		if(operand == "+"){
+			return num1 + Double.parseDouble(num2);
+		}else if(operand == "-"){
+			return num1 - Double.parseDouble(num2);
+		}else if(operand == "/"){
+			return num1 / Double.parseDouble(num2);
+		}else if(operand == "*"){
+			return num1 * Double.parseDouble(num2);
+		}else{
+			return 0;
+		}		
 	}
 
 	@Override

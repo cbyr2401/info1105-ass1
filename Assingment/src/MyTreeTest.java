@@ -24,6 +24,8 @@ public class MyTreeTest {
 	MyTree<String> bigCompleteTree = new MyTree<String>(); //Complete tree
 	MyTree<String> arithmeticTree = new MyTree<String>(); //Arithmetic tree
 	MyTree<String> bigArithmeticTree = new MyTree<String>(); //Arithmetic tree
+	MyTree<Integer> wikipedia1 = new MyTree<>(); //unbalanced
+	MyTree<String> wikipedia2 = new MyTree<>(); //balanced
 	
 	// for first tree:
     Position<String> a = new SimplePosition<String>("a");
@@ -100,6 +102,32 @@ public class MyTreeTest {
     //Position<String> b8= new SimplePosition<String>("1");
     //Position<String> c8 = new SimplePosition<String>("2");
     
+    // for wikipedia 1
+    Position<Integer> aw = new SimplePosition<Integer>(2);
+	Position<Integer> bw = new SimplePosition<Integer>(7);
+	Position<Integer> cw = new SimplePosition<Integer>(5);
+	Position<Integer> dw = new SimplePosition<Integer>(2);
+	Position<Integer> ew = new SimplePosition<Integer>(6);
+	Position<Integer> fw = new SimplePosition<Integer>(5);
+	Position<Integer> gw = new SimplePosition<Integer>(11);
+	Position<Integer> hw = new SimplePosition<Integer>(9);
+	Position<Integer> iw = new SimplePosition<Integer>(4);
+	
+	// for wikipedia 2
+	Position<String> a1w = new SimplePosition<String>("ABCDE");
+	Position<String> b1w = new SimplePosition<String>("ABCD");
+	Position<String> c1w = new SimplePosition<String>("E");
+	Position<String> d1w = new SimplePosition<String>("AB");
+	Position<String> e1w = new SimplePosition<String>("CD");
+	Position<String> f1w = new SimplePosition<String>("A");
+	Position<String> g1w = new SimplePosition<String>("B");
+	Position<String> h1w = new SimplePosition<String>("C");
+	Position<String> i1w = new SimplePosition<String>("D");
+	
+	
+    
+    
+    
 	
 	@Before
 	public void setUp(){
@@ -174,6 +202,28 @@ public class MyTreeTest {
 		bigArithmeticTree.insert(c8, f8);
 		bigArithmeticTree.insert(g8, h8);
 		bigArithmeticTree.insert(g8, i8);
+		
+		// unbalanced
+		wikipedia1.setRoot(aw);
+		wikipedia1.insert(aw, bw);
+		wikipedia1.insert(aw, cw);
+		wikipedia1.insert(bw, dw);
+		wikipedia1.insert(bw, ew);
+		wikipedia1.insert(ew, fw);
+		wikipedia1.insert(ew, gw);
+		wikipedia1.insert(cw, hw);
+		wikipedia1.insert(hw, iw);
+		
+		// balanced
+		wikipedia2.setRoot(a1w);
+		wikipedia2.insert(a1w, b1w);
+		wikipedia2.insert(a1w, c1w);
+		wikipedia2.insert(b1w, d1w);
+		wikipedia2.insert(b1w, e1w);
+		wikipedia2.insert(d1w, f1w);
+		wikipedia2.insert(d1w, g1w);
+		wikipedia2.insert(e1w, h1w);
+		wikipedia2.insert(e1w, i1w);
 		
 		
 	}
@@ -482,7 +532,7 @@ public class MyTreeTest {
 		Position<Integer> d2 = new SimplePosition<Integer>(75);
 		Position<Integer> e2 = new SimplePosition<Integer>(96);
 		Position<Integer> f2 = new SimplePosition<Integer>(10);
-		Position<Integer> g2 = new SimplePosition<Integer>(60);
+		Position<Integer> g2 = new SimplePosition<Integer>(80);
 		//Position<Integer> h2 = new SimplePosition<Integer>(7);
 		
 		
@@ -499,13 +549,13 @@ public class MyTreeTest {
 		bst2.insert(b1, d1);
 		bst2.insert(b1, e1);
 		
-		bst2.setRoot(a2);
-		bst2.insert(a2, b2);
-		bst2.insert(a2, c2);
-		bst2.insert(b2, d2);
-		bst2.insert(b2, e2);
-		bst2.insert(d2, f2);
-		bst2.insert(d2, g2);
+		bst3.setRoot(a2);
+		bst3.insert(a2, b2);
+		bst3.insert(a2, c2);
+		bst3.insert(b2, d2);
+		bst3.insert(b2, e2);
+		bst3.insert(d2, f2);
+		bst3.insert(d2, g2);
 		
 		assertFalse(bst1.isBinarySearchTree());
 		assertFalse(bst2.isBinarySearchTree());
@@ -513,4 +563,14 @@ public class MyTreeTest {
 
 	}
 
+	@Test
+	public void testIsBalancedTree(){
+
+		assertTrue(wikipedia2.isBalancedBinary());
+		assertTrue(wikipedia1.isBinary());
+		assertFalse(wikipedia1.isBalancedBinary());
+		
+
+	}
+	
 }

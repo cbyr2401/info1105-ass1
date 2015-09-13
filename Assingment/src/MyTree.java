@@ -137,71 +137,55 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	// END NJ HELPER METHODS FOR isArithmetic()
 	// END NJ HELPER METHODS FOR isArithmetic()
 	// END NJ HELPER METHODS FOR isArithmetic()
-
+		
 	@Override
 	public double evaluateArithmetic() {
-		// TODO Fix.  This is not working.
-		if(isArithmetic()){
-			List<E> inorder = inOrder();
-			
-			// convert to string list:
-			List<String> strMaths = new ArrayList<>();
-			
-			for(E element : inorder){
-				strMaths.add(element.toString());
-			}
-			
-			double result = 0;
-			String num1 = null;
-			String num2 = null;
-			String operand = null;
-			for(String element : strMaths){
-				if(num1 == null  && isNumeric(element)){
-					if(result == 0){
-						result = Double.parseDouble(element);
-						num1 = element;
-					}else{
-						num1 = element;
-					}
-					//
-					num1 = element;
-				}else if(num2 == null && isNumeric(element)){
-					num2 = element;
-				}else if(operand == null && isOperator(element)){
-					operand = element; 
-				}else if(num1 != null && num2 != null && operand != null){
-					result = ALU(Double.parseDouble(num1), operand, num2);
-					num1 = null;
-					num2 = null;
-					operand = null;
-				}
-			}
-			System.out.println(strMaths.toString());
-			return result;
-			
-		}
-		return 0;
+		return evaluateArithmetic(this.root()); 
+	}
+		
+	public double evaluateArithmetic(Position <E> node) {
+		if (!hasChildren(node)) 
+			return Double.parseDouble(node.getElement().toString()); 
+		else 
+			return eval(node); 
+		
 	}
 	
-	// method for performing operations:
-	public double ALU(double num1, String operand, String num2){
-		if(operand == "+"){
-			return num1 + Double.parseDouble(num2);
-		}else if(operand == "-"){
-			return num1 - Double.parseDouble(num2);
-		}else if(operand == "/"){
-			return num1 / Double.parseDouble(num2);
-		}else if(operand == "*"){
-			return num1 * Double.parseDouble(num2);
-		}else{
-			return 0;
-		}		
+	public double eval(Position <E> node) {
+		Position <E> right = node.getChildren().get(0); 
+		Position <E> left = node.getChildren().get(1);  
+		String element = node.getElement().toString(); 
+		 if (element.equals("+"))
+			 return evaluateArithmetic(right) + evaluateArithmetic(left);
+		 else if (element.equals("-"))
+			 return evaluateArithmetic(right) - evaluateArithmetic(left);
+		 else if(element.equals("*"))
+			 return evaluateArithmetic(right) * evaluateArithmetic(left);
+		 else 
+			 return evaluateArithmetic(right) / evaluateArithmetic(left);
+		 
+
 	}
 
 	@Override
 	public String getArithmeticString() {
-		// TODO Auto-generated method stub
-		return null;
+		return infix(this.root());
+	}
+	
+	String str;
+	public String infix(Position <E> node) {
+		if (!hasChildren(node) ){
+			str += node.getElement().toString(); 
+			return str;
+		} else {
+			str +="(";
+			infix(node.getChildren().get(0));
+			str += node.getElement().toString();
+			infix(node.getChildren().get(1));
+			str += ")";
+			str = str.replace("null", "");
+			return str; 
+		}		
 	}
 
 	@Override
@@ -288,7 +272,67 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	@Override
 	public boolean isBalancedBinary() {
 		// TODO Auto-generated method stub
-		return false;
+		if(this.root() == null || !hasChildren(this.root())){
+			return true;
+		}else if(!isBinary()){
+			return false;
+		}else{
+			// formula: h < 2log(n(h)) + 2, where h = height and n = internal entries / nodes
+			double heightCal = 2*Math.log(size()-numLeaves()) + 2;
+			System.out.println(heightCal);
+			
+			int height = height();
+			System.out.println(height);
+			if(height >= heightCal){
+				return false;
+			}else{
+				return true;
+			}
+			//return isBalancedBinary(root());
+		}
+	}
+	
+	public boolean isBalancedBinary(Position<E> node){
+		//int height = height();
+		int childs = numChildren(node);
+		if(childs==2){
+			if(greaterThanOne(node)){
+				return false;
+			}else{
+				for(Position<E> child: node.getChildren()){
+					return isBalancedBinary(child);
+				}
+				return true;
+			}
+		}else if(childs==1){
+			return !greaterThanOne(node);
+		}else{
+			return true;
+		}
+	}
+	
+	public boolean greaterThanOne(Position<E> node){
+		int first = height(node.getChildren().get(0));
+		if(numChildren(node)>1){
+			int second = height(node.getChildren().get(1));
+			if(first - second > 1){
+				return true;
+			}else if(second - first > 1){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			if(first > 0){
+				// no second child means height -1
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		
+		
 	}
 
 	@Override
@@ -301,11 +345,11 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	public boolean isBinarySearchTree() {
 		if(root()==null || numChildren(root())==0){
 			return true;
-		}else if(!isProperBinary()){
+		}else if(!isBinary()){
 			return false;
 		}else{
 			
-			List<E> inorderList = inOrder();
+			List<E> inorderList = inOrderBinary();
 			List<String> comparisionList = new ArrayList<>();
 			
 			for(E element : inorderList){
@@ -340,6 +384,24 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return list;
 		}else{
 			if(isProperBinary()){
+				return inorder(this.root(), list);
+			}else{
+				throw new UnsupportedOperationException();
+			}
+		}
+		
+	}
+	
+	/*
+	 *  helper method for isBinarySearchTree()
+	 * 
+	 */
+	public List<E> inOrderBinary() {
+		List<E> list = new ArrayList<E>();
+		if(root()==null){
+			return list;
+		}else{
+			if(isBinary()){
 				return inorder(this.root(), list);
 			}else{
 				throw new UnsupportedOperationException();

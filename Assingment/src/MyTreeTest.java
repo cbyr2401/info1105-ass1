@@ -623,4 +623,29 @@ public class MyTreeTest {
 	    boolean min = true; 
 	    assertTrue(heap.isHeap(min)); 
 	}
+	@Test
+	public void testComparison() {
+		MyTree<String> tree = new MyTree<String>(); 
+		 Position<String> aa1 = new SimplePosition<String>("a");
+		    Position<String> bb1= new SimplePosition<String>("b");
+		    Position<String> cc1 = new SimplePosition<String>("c");
+		    Position<String> dd1 = new SimplePosition<String>("d");
+		    Position<String> ee1 = new SimplePosition<String>("e");
+		    Position<String> ff1 = new SimplePosition<String>("f");
+		    Position<String> gg1 = new SimplePosition<String>("g");
+		    Position<String> hh1 = new SimplePosition<String>("z");
+			tree.setRoot(aa1);
+			tree.insert(aa1,bb1);
+			tree.insert(aa1,cc1);
+			tree.insert(bb1,dd1);
+			tree.insert(bb1,ee1);
+			tree.insert(ee1,ff1);
+			tree.insert(ee1,gg1);
+			tree.insert(cc1,hh1);
+		assertEquals(0, bigBinaryTree.compareTo(bigBinaryTree));
+		assertEquals(0, bigCompleteTree.compareTo(bigCompleteTree));
+		System.out.println("h".compareTo("z"));
+		assertEquals("h".compareTo("z"), bigBinaryTree.compareTo(tree));
+
+	}
 }

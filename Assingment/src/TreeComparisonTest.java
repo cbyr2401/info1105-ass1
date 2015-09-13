@@ -68,9 +68,12 @@ public class TreeComparisonTest {
     	treeD.setRoot(new SimplePosition<String>("d"));
     	
     	assertEquals(0, treeA.compareTo(treeA2));
+    	//System.out.println("a".compareTo("d"));
     	assertEquals("a".compareTo("d"), treeA.compareTo(treeD));
     	assertEquals("d".compareTo("a"), treeD.compareTo(treeA));
 		
 	}
+	
+	
 
 }

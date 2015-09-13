@@ -573,15 +573,11 @@ public class MyTreeTest {
 
 	}
 	
+	
 	@Test
 	public void testEvaluateArithmetic(){
 		assertEquals(3, arithmeticTree.evaluateArithmetic(), 0.00001);
 		assertEquals(44, bigArithmeticTree.evaluateArithmetic(), 0.00001);
 	}
 	
-	@Test
-	public void testGetStringArithmetic(){
-		assertEquals("(((10/5)*12)+(21-1))", bigArithmeticTree.getArithmeticString());
-		assertEquals("(1+2)", arithmeticTree.getArithmeticString());
-	}
 }

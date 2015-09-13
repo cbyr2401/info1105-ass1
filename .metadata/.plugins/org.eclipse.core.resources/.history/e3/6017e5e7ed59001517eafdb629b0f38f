@@ -582,6 +582,5 @@ public class MyTreeTest {
 	@Test
 	public void testGetStringArithmetic(){
 		assertEquals("(((10/5)*12)+(21-1))", bigArithmeticTree.getArithmeticString());
-		assertEquals("(1+2)", arithmeticTree.getArithmeticString());
 	}
 }

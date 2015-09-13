@@ -64,8 +64,8 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 				return true;
 		}
 
+		
 		// checker for internal nodes
-
 		int counter = 0;
 		int internalNodes = 0;
 
@@ -93,9 +93,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		}
 
 		// checker for leaves
-		
-
-		
 		public int intChecker(Position<E> node) {
 			if (numChildren(node) == 0 && isNumeric(node.getElement().toString())) {
 				NewCounter++;	
@@ -176,6 +173,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	public String infix(Position <E> node) {
 		if (!hasChildren(node) ){
 			str += node.getElement().toString(); 
+			str = str.replace("null", "");
 			return str;
 		} else {
 			str +="(";
@@ -187,6 +185,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return str; 
 		}		
 	}
+
 
 	@Override
 	public int height() {

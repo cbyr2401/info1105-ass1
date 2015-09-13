@@ -10,7 +10,7 @@ import simpletree.Position;
 import simpletree.SimpleTree;
 
 /**
- * @author njay####
+ * @author njay2626
  * @author cbyr2401
  * 
  *         This class, MyTree, should be your solution to the assignment It
@@ -33,12 +33,12 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	}
 
 	List<String> list = new ArrayList<String>();
-	List<E> pos1List;
-	List<E> pos2List;
-	int max = 0;
+	
 
 	@Override
 	public int compareTo(Tree<E> other) {
+		List<E> pos1List;
+		List<E> pos2List;
 		// TODO: implement this method if enrolled in INFO1105
 		// compare the tree with another tree
 		// check the structure and values of the trees:
@@ -76,8 +76,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 					int position2 = otherTree.numPositions(i);
 					pos1List = this.preOrder();
 					pos2List = otherTree.preOrder();
-				//	System.out.println(pos1List);
-				//	System.out.println(pos2List);
+				
 					if (position1 < position2)
 						return -1;
 					else if (position1 > position2) {
@@ -97,18 +96,14 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 		}
 
-		// List<E> thisInOrder = this.inOrder();
-		// List<E> otherInOrder = this.inOrder();
-
+	
 		return 0;
 	}
 
 	public int compareNodes(String str, String str2) {
-		// System.out.println("hey");
 
 		if (!str.equals(str2)) {
 
-			// System.out.println(str.compareTo(str2));
 			return str.compareTo(str2);
 		} else {
 
@@ -124,21 +119,13 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		NewCounter = 0;
 
 		if (this.size() == 1) {
-			if (isOperator(this.root().getElement().toString()))
-				return false;
-			else
-				return true;
+			if (isOperator(this.root().getElement().toString())) return false;
+			else return true;
 		}
-		if (root() == null || numChildren(root()) == 0 || !isProperBinary()) {
-			return false;
-		} else if (operatorChecker(this.root()) != 1) {
-			System.out.println("falseOperator");
-			return false;
-		} else if (intChecker(this.root()) != 1) {
-
-			return false;
-		} else
-			return true;
+		if (root() == null || numChildren(root()) == 0 || !isProperBinary()) return false;
+		else if (operatorChecker(this.root()) != 1) return false;
+		else if (intChecker(this.root()) != 1) return false;
+	    else return true;
 	}
 
 	// checker for internal nodes
@@ -156,16 +143,13 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 				counter++;
 			}
 		}
-
 		for (int i = 0; i < numChildren(node); i++) {
 			numLeaves(node.getChildren().get(i));
 		}
 
 		// if counter == number of internal nodes return true
-		if (counter == internalNodes)
-			return 1;
-		else
-			return 0;
+		if (counter == internalNodes) return 1;
+		else return 0;
 
 	}
 
@@ -179,12 +163,11 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return 1;
 
 		for (int i = 0; i < numChildren(node); i++) {
-			intChecker(node.getChildren().get(i)); // subtree = 1 +
+			intChecker(node.getChildren().get(i)); 
 		}
-		if (NewCounter == this.numLeaves())
-			return 1;
-		else
-			return 0;
+		
+		if (NewCounter == this.numLeaves()) return 1;
+		else return 0;
 	}
 
 	public static boolean isNumeric(String str) {
@@ -204,7 +187,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		if (array[0] == '+' || array[0] == '-' || array[0] == '/'
 				|| array[0] == '*')
 			return true;
-		else
+		else 
 			return false;
 	}
 
@@ -212,17 +195,87 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	public double evaluateArithmetic() {
 		return evaluateArithmetic(this.root());
 	}
+	
+
+
+	/*
+	 * evaluateArithmetic() helper methods: 1. evaluateArithmetic 2. eval
+	 */
+	private double evaluateArithmetic(Position<E> node) {
+		if (!hasChildren(node))
+			return Double.parseDouble(node.getElement().toString());
+		else
+			return eval(node);
+	}
+
+	private double eval(Position<E> node) {
+		Position<E> right = node.getChildren().get(0);
+		Position<E> left = node.getChildren().get(1);
+		String element = node.getElement().toString();
+		if (element.equals("+"))
+			return evaluateArithmetic(right) + evaluateArithmetic(left);
+		else if (element.equals("-"))
+			return evaluateArithmetic(right) - evaluateArithmetic(left);
+		else if (element.equals("*"))
+			return evaluateArithmetic(right) * evaluateArithmetic(left);
+		else
+			return evaluateArithmetic(right) / evaluateArithmetic(left);
+	}
+
 
 	@Override
 	public String getArithmeticString() {
 		return infix(this.root());
 	}
+	
+
+	/*
+	 * getArithmeticString() helper method
+	 */
+	String str;
+
+	private String infix(Position<E> node) {
+		if (!hasChildren(node)) {
+			str += node.getElement().toString();
+			str = str.replace("null", "");
+			return str;
+		} else {
+			str += "(";
+			infix(node.getChildren().get(0));
+			str += node.getElement().toString();
+			infix(node.getChildren().get(1));
+			str += ")";
+			str = str.replace("null", "");
+			return str;
+		}
+	}
+
 
 	@Override
 	public int height() {
 		if (this.root() == null)
 			return -1;
 		return height(this.root());
+	}
+	
+	/*
+	 * int height() helper
+	 */
+	private int height(Position<E> position) {
+		int maxHeight = 0;
+		int subtree = 0;
+
+		if (numChildren(position) == 0) {
+			return 0;
+		} else {
+			for (int i = 0; i < numChildren(position); i++) {
+				subtree = 1 + height(position.getChildren().get(i));
+
+				if (subtree > maxHeight)
+					maxHeight = subtree;
+			}
+			return maxHeight;
+		}
 	}
 
 	@Override
@@ -233,6 +286,28 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return height(this.root(), maxDepth);
 	}
 
+	/*
+	 * int height(int maxDepth) helper
+	 */
+	private int height(Position<E> position, int maxDepth) {
+		int maxHeight = 0;
+		int subtree = 0;
+
+		if (numChildren(position) == 0) {
+			return 0;
+		} else {
+			for (int i = 0; i < numChildren(position); i++) {
+				subtree = 1 + height(position.getChildren().get(i), maxDepth);
+				if (subtree >= maxDepth) {
+					return maxDepth;
+				}
+				if (subtree > maxHeight)
+					maxHeight = subtree;
+			}
+			return maxHeight;
+		}
+	}
+	
 	@Override
 	public int numLeaves() {
 		if (this.root() == null)
@@ -242,6 +317,22 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		else
 			return numLeaves(this.root());
 	}
+	
+
+	/*
+	 * numLeaves() helper method:
+	 */
+	private int numLeaves(Position<E> position) {
+		int leaves = 0;
+		if (numChildren(position) == 0) {
+			return 1;
+		}
+		for (int i = 0; i < numChildren(position); i++) {
+			leaves += numLeaves(position.getChildren().get(i)); // subtree = 1 +
+		}
+		return leaves;
+	}
+
 
 	@Override
 	public int numLeaves(int depth) {
@@ -251,6 +342,27 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return 1;
 		else {
 			return numLeaves(this.root(), depth);
+		}
+	}
+	
+
+	/*
+	 * numLeaves(int maxDepth) helper method. NOTE: Return ONLY numLeaves at the
+	 * specified depth
+	 */
+	private int numLeaves(Position<E> position, int depth) {
+		int leaves = 0;
+		if (depth == 0 && numChildren(position) == 0) {
+			// is a leaf at the right level
+			return 1;
+		} else if (depth == 0) {
+			// is not a leaf but at the right level
+			return 0;
+		} else {
+			for (int i = 0; i < numChildren(position); i++) {
+				leaves += numLeaves(position.getChildren().get(i), depth - 1);
+			}
+			return leaves;
 		}
 	}
 
@@ -264,6 +376,26 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return numPositions(this.root(), depth);
 		}
 	}
+	
+	/*
+	 * numPositions(int maxDepth) helper method. NOTE: Return ONLY numPositions
+	 * at the specified depth
+	 */
+	private int numPositions(Position<E> node, int depth) {
+		int nodes = 0;
+		if (depth == 0 && numChildren(node) == 0) {
+			// is a leaf at the right level
+			return 1;
+		} else if (depth == 0) {
+			// is not a leaf but at the right level
+			return 1;
+		} else {
+			for (int i = 0; i < numChildren(node); i++) {
+				nodes += numLeaves(node.getChildren().get(i), depth - 1);
+			}
+			return nodes;
+		}
+	}
 
 	@Override
 	public boolean isBinary() {
@@ -274,12 +406,50 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		}
 	}
 
+	/*
+	 * isBinary() helper method:
+	 */
+	private boolean isBinary(Position<E> position) {
+		int numChilds = numChildren(position);
+		if (numChilds == 0) {
+			return true;
+		} else if (numChilds <= 2) {
+			for (int i = 0; i < numChilds; i++) {
+				if (isBinary(position.getChildren().get(i)) == false)
+					return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	@Override
 	public boolean isProperBinary() {
 		if (root() == null) {
 			return true;
 		} else {
 			return isProperBinary(this.root());
+		}
+	}
+
+	/*
+	 * isProperBinary() helper method:
+	 */
+	private boolean isProperBinary(Position<E> position) {
+		int numChilds = numChildren(position);
+		if (numChilds == 0) {
+			return true;
+		} else if (numChilds == 1) {
+			return false;
+		} else if (numChilds == 2) {
+			for (int i = 0; i < 2; i++) {
+				if (isProperBinary(position.getChildren().get(i)) == false)
+					return false;
+			}
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -298,6 +468,37 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return isCompleteBinary(this.root());
 		}
 	}
+
+	/*
+	 * isCompleteBinary() helper method - version 5:
+	 */
+	private boolean isCompleteBinary(Position<E> node) {
+		int numchilds = numChildren(node);
+		if (numchilds == 0) {
+			return true;
+		}
+		if (numchilds == 1) {
+			if (size(node.getChildren().get(0)) == 0) {
+				return true;
+			} else if (size(node.getChildren().get(0)) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		if (numchilds == 2) {
+			List<Position<E>> childs = node.getChildren();
+			if (size(childs.get(0)) < size(childs.get(1))
+					|| size(childs.get(0)) - size(childs.get(1)) > 2) {
+				return false;
+			} else {
+				return isCompleteBinary(childs.get(0));
+			}
+		} else {
+			return false;
+		}
+	}
+
 
 	@Override
 	public boolean isBalancedBinary() {
@@ -318,6 +519,33 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			}
 		}
 	}
+
+
+	/*
+	 * isBalancedBinary() helper method
+	 */
+	private boolean isBalancedBinary(Position<E> node) {
+		int childs = numChildren(node);
+
+		if (childs == 0) {
+			return true;
+		} else if (childs == 1) {
+			if (height(node.getChildren().get(0)) > 0) {
+				return false;
+			} else {
+				return true;
+			}
+		} else if (childs == 2) {
+			for (Position<E> child : node.getChildren()) {
+				if (isBalancedBinary(child) == false)
+					return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 
 	int Ncounter = 0;
 
@@ -342,7 +570,9 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 				return false;
 		}
 	}
-
+ /*
+  * Helper method to determine if min heap
+  */
 	private boolean isMinHeap(Position<E> node) {
 		try {
 			if (!hasChildren(node)) {
@@ -364,7 +594,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 			}
 		} catch (NumberFormatException g) {
-			System.out.println("hey");
 			return false;
 		}
 
@@ -374,6 +603,9 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return false;
 
 	}
+	 /*
+	  * Helper method to determine if max heap
+	  */
 
 	private boolean isMaxHeap(Position<E> node) {
 		try {
@@ -381,17 +613,14 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 				E childVal = node.getElement();
 				E parentVal = node.getParent().getElement();
 				if (parentVal.compareTo(childVal) == -1) {
-					System.out.println("hey");
 					Ncounter++;
 					return false;
 				}
-
 			} else {
 				for (int i = 0; i < numChildren(node); i++) {
 					if (isMaxHeap(node.getChildren().get(i)) == false)
 						return false;
 				}
-
 			}
 			if (Ncounter == 0)
 				return true;
@@ -427,274 +656,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		}
 	}
 
-	@Override
-	public List<E> preOrder() {
-		List<E> list = new ArrayList<E>();
-		return preorder(this.root(), list);
-	}
-
-	@Override
-	public List<E> postOrder() {
-		List<E> list = new ArrayList<E>();
-		return postorder(this.root(), list);
-	}
-
-	@Override
-	public List<E> inOrder() {
-		List<E> list = new ArrayList<E>();
-		if (root() == null) {
-			return list;
-		} else {
-			if (isProperBinary()) {
-				return inorder(this.root(), list);
-			} else {
-				throw new UnsupportedOperationException();
-			}
-		}
-
-	}
-
-	// HELPER METHODS:
-	/*
-	 * checks if parent has children
-	 */
-	private boolean hasChildren(Position<E> position) {
-		if (numChildren(position) == 0)
-			return false;
-		else
-			return true;
-	}
-
-	// EXTRA methods, allowing for recursion:
-	/*
-	 * Preorder traversal method:
-	 */
-	private List<E> preorder(Position<E> node, List<E> list) {
-		if (node != null) {
-			list.add(node.getElement());
-			for (int i = 0; i < numChildren(node); i++) {
-				preorder(node.getChildren().get(i), list);
-			}
-		}
-		return list;
-	}
-
-	/*
-	 * PostOrder traversal method:
-	 */
-	private List<E> postorder(Position<E> node, List<E> list) {
-		if (node != null) {
-			for (int i = 0; i < numChildren(node); i++) {
-				postorder(node.getChildren().get(i), list);
-			}
-			list.add(node.getElement());
-		}
-		return list;
-	}
-
-	/*
-	 * InOrder traversal method:
-	 */
-	private List<E> inorder(Position<E> node, List<E> list) {
-		if (numChildren(node) > 0 && node.getChildren().get(0) != null) {
-			inorder(node.getChildren().get(0), list);
-		}
-		list.add(node.getElement());
-		if (numChildren(node) > 1 && node.getChildren().get(1) != null) {
-			inorder(node.getChildren().get(1), list);
-		}
-		return list;
-	}
-
-	/*
-	 * int height() helper
-	 */
-	private int height(Position<E> position) {
-		int maxHeight = 0;
-		int subtree = 0;
-
-		if (numChildren(position) == 0) {
-			return 0;
-		} else {
-			for (int i = 0; i < numChildren(position); i++) {
-				subtree = 1 + height(position.getChildren().get(i));
-
-				if (subtree > maxHeight)
-					maxHeight = subtree;
-			}
-			return maxHeight;
-		}
-	}
-
-	/*
-	 * int height(int maxDepth) helper
-	 */
-	private int height(Position<E> position, int maxDepth) {
-		int maxHeight = 0;
-		int subtree = 0;
-
-		if (numChildren(position) == 0) {
-			return 0;
-		} else {
-			for (int i = 0; i < numChildren(position); i++) {
-				subtree = 1 + height(position.getChildren().get(i), maxDepth);
-				if (subtree >= maxDepth) {
-					return maxDepth;
-				}
-				if (subtree > maxHeight)
-					maxHeight = subtree;
-			}
-			return maxHeight;
-		}
-	}
-
-	/*
-	 * numLeaves() helper method:
-	 */
-	private int numLeaves(Position<E> position) {
-		int leaves = 0;
-		if (numChildren(position) == 0) {
-			return 1;
-		}
-		for (int i = 0; i < numChildren(position); i++) {
-			leaves += numLeaves(position.getChildren().get(i)); // subtree = 1 +
-		}
-		return leaves;
-	}
-
-	/*
-	 * numLeaves(int maxDepth) helper method. NOTE: Return ONLY numLeaves at the
-	 * specified depth
-	 */
-	private int numLeaves(Position<E> position, int depth) {
-		int leaves = 0;
-		if (depth == 0 && numChildren(position) == 0) {
-			// is a leaf at the right level
-			return 1;
-		} else if (depth == 0) {
-			// is not a leaf but at the right level
-			return 0;
-		} else {
-			for (int i = 0; i < numChildren(position); i++) {
-				leaves += numLeaves(position.getChildren().get(i), depth - 1);
-			}
-			return leaves;
-		}
-	}
-
-	/*
-	 * numPositions(int maxDepth) helper method. NOTE: Return ONLY numPositions
-	 * at the specified depth
-	 */
-	private int numPositions(Position<E> node, int depth) {
-		int nodes = 0;
-		if (depth == 0 && numChildren(node) == 0) {
-			// is a leaf at the right level
-			return 1;
-		} else if (depth == 0) {
-			// is not a leaf but at the right level
-			return 1;
-		} else {
-			for (int i = 0; i < numChildren(node); i++) {
-				nodes += numLeaves(node.getChildren().get(i), depth - 1);
-			}
-			return nodes;
-		}
-	}
-
-	/*
-	 * isBinary() helper method:
-	 */
-	private boolean isBinary(Position<E> position) {
-		int numChilds = numChildren(position);
-		if (numChilds == 0) {
-			return true;
-		} else if (numChilds <= 2) {
-			for (int i = 0; i < numChilds; i++) {
-				if (isBinary(position.getChildren().get(i)) == false)
-					return false;
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/*
-	 * isProperBinary() helper method:
-	 */
-	private boolean isProperBinary(Position<E> position) {
-		int numChilds = numChildren(position);
-		if (numChilds == 0) {
-			return true;
-		} else if (numChilds == 1) {
-			return false;
-		} else if (numChilds == 2) {
-			for (int i = 0; i < 2; i++) {
-				if (isProperBinary(position.getChildren().get(i)) == false)
-					return false;
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/*
-	 * isCompleteBinary() helper method - version 5:
-	 */
-	private boolean isCompleteBinary(Position<E> node) {
-		int numchilds = numChildren(node);
-		if (numchilds == 0) {
-			return true;
-		}
-		if (numchilds == 1) {
-			if (size(node.getChildren().get(0)) == 0) {
-				return true;
-			} else if (size(node.getChildren().get(0)) == 1) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		if (numchilds == 2) {
-			List<Position<E>> childs = node.getChildren();
-			if (size(childs.get(0)) < size(childs.get(1))
-					|| size(childs.get(0)) - size(childs.get(1)) > 2) {
-				return false;
-			} else {
-				return isCompleteBinary(childs.get(0));
-			}
-		} else {
-			return false;
-		}
-	}
-
-	/*
-	 * isBalancedBinary() helper method
-	 */
-	private boolean isBalancedBinary(Position<E> node) {
-		int childs = numChildren(node);
-
-		if (childs == 0) {
-			return true;
-		} else if (childs == 1) {
-			if (height(node.getChildren().get(0)) > 0) {
-				return false;
-			} else {
-				return true;
-			}
-		} else if (childs == 2) {
-			for (Position<E> child : node.getChildren()) {
-				if (isBalancedBinary(child) == false)
-					return false;
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	/*
 	 * helper method for isBinarySearchTree()
 	 */
@@ -712,48 +673,88 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	}
 
-	/*
-	 * evaluateArithmetic() helper methods: 1. evaluateArithmetic 2. eval
-	 */
-	private double evaluateArithmetic(Position<E> node) {
-		if (!hasChildren(node))
-			return Double.parseDouble(node.getElement().toString());
-		else
-			return eval(node);
+
+	@Override
+	public List<E> preOrder() {
+		List<E> list = new ArrayList<E>();
+		return preorder(this.root(), list);
 	}
-
-	private double eval(Position<E> node) {
-		Position<E> right = node.getChildren().get(0);
-		Position<E> left = node.getChildren().get(1);
-		String element = node.getElement().toString();
-		if (element.equals("+"))
-			return evaluateArithmetic(right) + evaluateArithmetic(left);
-		else if (element.equals("-"))
-			return evaluateArithmetic(right) - evaluateArithmetic(left);
-		else if (element.equals("*"))
-			return evaluateArithmetic(right) * evaluateArithmetic(left);
-		else
-			return evaluateArithmetic(right) / evaluateArithmetic(left);
-	}
-
+	
 	/*
-	 * getArithmeticString() helper method
+	 * Preorder traversal method:
 	 */
-	String str;
-
-	private String infix(Position<E> node) {
-		if (!hasChildren(node)) {
-			str += node.getElement().toString();
-			str = str.replace("null", "");
-			return str;
-		} else {
-			str += "(";
-			infix(node.getChildren().get(0));
-			str += node.getElement().toString();
-			infix(node.getChildren().get(1));
-			str += ")";
-			str = str.replace("null", "");
-			return str;
+	private List<E> preorder(Position<E> node, List<E> list) {
+		if (node != null) {
+			list.add(node.getElement());
+			for (int i = 0; i < numChildren(node); i++) {
+				preorder(node.getChildren().get(i), list);
+			}
 		}
+		return list;
+	}
+
+
+	@Override
+	public List<E> postOrder() {
+		List<E> list = new ArrayList<E>();
+		return postorder(this.root(), list);
+	}
+	
+	/*
+	 * PostOrder traversal method:
+	 */
+	private List<E> postorder(Position<E> node, List<E> list) {
+		if (node != null) {
+			for (int i = 0; i < numChildren(node); i++) {
+				postorder(node.getChildren().get(i), list);
+			}
+			list.add(node.getElement());
+		}
+		return list;
+	}
+
+	@Override
+	public List<E> inOrder() {
+		List<E> list = new ArrayList<E>();
+		if (root() == null) {
+			return list;
+		} else {
+			if (isProperBinary()) {
+				return inorder(this.root(), list);
+			} else {
+				throw new UnsupportedOperationException();
+			}
+		}
+
+	}
+	/*
+	 * InOrder traversal method:
+	 */
+	private List<E> inorder(Position<E> node, List<E> list) {
+		if (numChildren(node) > 0 && node.getChildren().get(0) != null) {
+			inorder(node.getChildren().get(0), list);
+		}
+		list.add(node.getElement());
+		if (numChildren(node) > 1 && node.getChildren().get(1) != null) {
+			inorder(node.getChildren().get(1), list);
+		}
+		return list;
+	}
+
+
+	/*
+	 * checks if parent has children
+	 */
+	private boolean hasChildren(Position<E> position) {
+		if (numChildren(position) == 0)
+			return false;
+		else
+			return true;
 	}
 }
+
+	
+	
+
+
+

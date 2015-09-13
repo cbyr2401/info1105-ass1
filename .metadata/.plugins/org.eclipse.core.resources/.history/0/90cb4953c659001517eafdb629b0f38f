@@ -460,9 +460,7 @@ public class MyTreeTest {
 	
 	@Test
 	public void testIsBinarySearchTree(){
-		MyTree<Integer> bst1 = new MyTree<>();
-		MyTree<Integer> bst2 = new MyTree<>();
-		MyTree<Integer> bst3 = new MyTree<>();
+		MyTree<Integer> bst = new MyTree<>();
 		
 		Position<Integer> a = new SimplePosition<Integer>(6);
 		Position<Integer> b = new SimplePosition<Integer>(12);
@@ -470,47 +468,15 @@ public class MyTreeTest {
 		Position<Integer> d = new SimplePosition<Integer>(2);
 		Position<Integer> e = new SimplePosition<Integer>(5);
 		
-		Position<Integer> a1 = new SimplePosition<Integer>(6);
-		Position<Integer> b1 = new SimplePosition<Integer>(5);
-		Position<Integer> c1 = new SimplePosition<Integer>(8);
-		Position<Integer> d1 = new SimplePosition<Integer>(2);
-		Position<Integer> e1 = new SimplePosition<Integer>(7);
-		
-		Position<Integer> a2 = new SimplePosition<Integer>(100);
-		Position<Integer> b2 = new SimplePosition<Integer>(95);
-		Position<Integer> c2 = new SimplePosition<Integer>(101);
-		Position<Integer> d2 = new SimplePosition<Integer>(75);
-		Position<Integer> e2 = new SimplePosition<Integer>(96);
-		Position<Integer> f2 = new SimplePosition<Integer>(10);
-		Position<Integer> g2 = new SimplePosition<Integer>(60);
-		//Position<Integer> h2 = new SimplePosition<Integer>(7);
 		
 		
+		bst.setRoot(a);
+		bst.insert(a, b);
+		bst.insert(a, c);
+		bst.insert(b, d);
+		bst.insert(b, e);
 		
-		bst1.setRoot(a);
-		bst1.insert(a, b);
-		bst1.insert(a, c);
-		bst1.insert(b, d);
-		bst1.insert(b, e);
-		
-		bst2.setRoot(a1);
-		bst2.insert(a1, b1);
-		bst2.insert(a1, c1);
-		bst2.insert(b1, d1);
-		bst2.insert(b1, e1);
-		
-		bst2.setRoot(a2);
-		bst2.insert(a2, b2);
-		bst2.insert(a2, c2);
-		bst2.insert(b2, d2);
-		bst2.insert(b2, e2);
-		bst2.insert(d2, f2);
-		bst2.insert(d2, g2);
-		
-		assertFalse(bst1.isBinarySearchTree());
-		assertFalse(bst2.isBinarySearchTree());
-		assertTrue(bst3.isBinarySearchTree());
-
+		assertFalse(bst.isBinarySearchTree());
 	}
 
 }

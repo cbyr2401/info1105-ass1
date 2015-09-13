@@ -299,38 +299,26 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	@Override
 	public boolean isBinarySearchTree() {
-		// TODO Auto-generated method stub
 		if(root()==null || numChildren(root())==0){
 			return true;
 		}else if(!isProperBinary()){
 			return false;
 		}else{
-			return isBinarySearchTree(root());
-		}
-		//return false;
-	}
-	
-	public boolean isBinarySearchTree(Position<E> node){
-		if(hasChildren(node)){
-			int comparision = compareElements(node.getChildren().get(0), node.getChildren().get(1));
 			
-			if(comparision == 1){
-				for(Position<E> child : node.getChildren()){
-					return isBinarySearchTree(child);
-				}
-				
-			}else{
-				return false;
+			List<E> inorderList = inOrder();
+			List<String> comparisionList = new ArrayList<>();
+			
+			for(E element : inorderList){
+				comparisionList.add(element.toString());
 			}
+			
+			for(int i=0; i < comparisionList.size()-1; i++){
+				if(comparisionList.get(i).compareTo(comparisionList.get(i+1))==1){
+					return false;
+				}
+			}
+			return true;
 		}
-		return true;
-	}
-	
-	public int compareElements(Position<E> e1, Position<E> e2){
-		String element1 = e1.toString();
-		String element2 = e2.toString();
-		
-		return element1.compareTo(element2);
 	}
 
 	@Override

@@ -82,10 +82,17 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	@Override
 	public boolean isArithmetic() {
 		NewCounter = 0;
+		if (this.size() == 1) {
+			if (intChecker(this.root()) == 1) {
+				return true; 	
+			}
+			else return false; 	
+		}
 		if(root()==null || numChildren(root())==0 || !isProperBinary()){
 			return false;
 		}
 		else if (operatorChecker(this.root()) != 1) {
+			System.out.println("falseOperator");
 			return false;
 		}
 		else if (intChecker(this.root()) != 1) {
@@ -93,6 +100,76 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			return false;
 		} else
 			return true;
+	}
+
+	// checker for internal nodes
+
+	int counter = 0;
+	int internalNodes = 0;
+
+	public int operatorChecker(Position<E> node) {
+		if (numChildren(node) == 0) {
+			return 1;
+		}
+		if (numChildren(node) != 0) {
+			internalNodes++;
+			if (isOperator(node.getElement().toString())) {
+				counter++;
+			}
+		}
+
+		for (int i = 0; i < numChildren(node); i++) {
+			numLeaves(node.getChildren().get(i));
+		}
+
+		// if counter == number of internal nodes return true
+		if (counter == internalNodes)
+			return 1;
+		else
+			return 0;
+
+	}
+
+	// checker for leaves
+	
+
+	
+	public int intChecker(Position<E> node) {
+		if (numChildren(node) == 0 && isNumeric(node.getElement().toString())) {
+			NewCounter++;	
+			return 1;			
+		}
+		else if (numChildren(node) == 0)
+			return 1;
+		
+		for (int i = 0; i < numChildren(node); i++) {
+		 intChecker(node.getChildren().get(i)); // subtree = 1 +
+		}
+		if (NewCounter == this.numLeaves())
+			return 1;
+		else 
+			return 0;
+	}
+
+	public static boolean isNumeric(String str) {
+		try {
+			Double.parseDouble(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isOperator(String str) {
+		char[] array = new char[1];
+		array = str.toCharArray();
+		if (array.length > 1)
+			return false;
+		if (array[0] == '+' || array[0] == '-' || array[0] == '/'
+				|| array[0] == '*')
+			return true;
+		else
+			return false;
 	}
 		
 	@Override
@@ -188,7 +265,6 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 
 	@Override
 	public boolean isBalancedBinary() {
-		// TODO Auto-generated method stub
 		if(this.root() == null || !hasChildren(this.root())){
 			return true;
 		}else if(!isBinary()){
@@ -196,10 +272,8 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		}else{
 			// formula: h < 2log(n(h)) + 2, where h = height and n = internal entries / nodes
 			double heightCal = 2*Math.log(size()-numLeaves()) + 2;
-			System.out.println(heightCal);
-			
 			int height = height();
-			System.out.println(height);
+			
 			if(height >= heightCal){
 				return false;
 			}else{
@@ -207,34 +281,96 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			}
 		}
 	}
-	/*
-	 * isBalancedBinary() helper method
-	 */
-	private boolean isBalancedBinary(Position<E> node){
-		int childs = numChildren(node);
-		
-		if(childs == 0){
-			return true;
-		}else if(childs==1){
-			if(height(node.getChildren().get(0))>0){
-				return false;
-			}else{
-				return true;
-			}
-		}else if(childs==2){
-			for(Position<E> child : node.getChildren()){
-				if(isBalancedBinary(child)==false) return false;
-			}
-			return true;
-		}else{
-			return false;
-		}
-	}
+
+	int Ncounter = 0;
 
 	@Override
 	public boolean isHeap(boolean min) {
-		// TODO Auto-generated method stub
-		return false;
+	
+		if(root() == null) 
+			return true;
+		if (size() == 1 && intChecker(root()) == 1) {
+			return true; 
+		}
+		else if(!isCompleteBinary()) {
+			return false; 
+		}
+		else  {
+			if (min == true)  {
+				Ncounter = 0;
+				System.out.println(isMinHeap(this.root()));
+			return isMinHeap(this.root());
+			} 
+			if (min == false) {
+				Ncounter = 0;
+				System.out.println("yo");
+			return isMaxHeap(this.root()); 
+			}
+			else
+			return false;
+		}
+	}
+	
+	
+	private boolean isMinHeap(Position <E> node) {
+		try {
+		if (!hasChildren(node))  {
+			E childVal = node.getElement();
+			E parentVal = node.getParent().getElement();
+
+			if(parentVal.compareTo(childVal)==1)   {
+				Ncounter++; 
+				return false; 
+			
+		}
+		}
+		
+		
+			else {
+			for (int i = 0; i < numChildren(node); i++) {
+				if (isMinHeap(node.getChildren().get(i)) == false)
+					return false; 
+			}
+			
+		}
+		} catch (NumberFormatException g) {
+			System.out.println("hey");
+			return false; 
+		}
+
+		if (Ncounter == 0)
+		return true; 	
+		else 
+			return false;
+
+	}
+
+	private boolean isMaxHeap(Position <E> node) {
+		try {
+		if (!hasChildren(node))  {
+			E childVal = node.getElement();
+			E parentVal = node.getParent().getElement();
+			if ( parentVal.compareTo(childVal)==-1 ) {
+				System.out.println("hey");
+				Ncounter++; 
+				return false; 
+			}
+			
+		}	else {
+			for (int i = 0; i < numChildren(node); i++) {
+				if (isMaxHeap(node.getChildren().get(i)) == false)
+						return false; 
+			}
+			
+		}
+		if (Ncounter == 0)
+		return true; 	
+		else 
+			return false; 
+			}
+			catch (NumberFormatException e) {
+				return false; 
+			}
 	}
 
 	@Override
@@ -505,6 +641,30 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	}
 	
 	/*
+	 * isBalancedBinary() helper method
+	 */
+	private boolean isBalancedBinary(Position<E> node){
+		int childs = numChildren(node);
+		
+		if(childs == 0){
+			return true;
+		}else if(childs==1){
+			if(height(node.getChildren().get(0))>0){
+				return false;
+			}else{
+				return true;
+			}
+		}else if(childs==2){
+			for(Position<E> child : node.getChildren()){
+				if(isBalancedBinary(child)==false) return false;
+			}
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/*
 	 *  helper method for isBinarySearchTree()
 	 */
 	private List<E> inOrderBinary() {
@@ -521,79 +681,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		
 	}	
 	
-	/*
-	 *  Helper methods for isArithmetic():
-	 *  	1. operationChecker
-	 *  	2. intChecker
-	 *  	3. isNumeric
-	 *  	4. isOperator
-	 */
-	
-	// checker for internal nodes
-	int counter = 0;
-	int internalNodes = 0;
 
-	private int operatorChecker(Position<E> node) {
-		if (numChildren(node) == 0) {
-			return 1;
-		}
-		if (numChildren(node) != 0) {
-			internalNodes++;
-			if (isOperator(node.getElement().toString())) {
-				counter++;
-			}
-		}
-
-		for (int i = 0; i < numChildren(node); i++) {
-			numLeaves(node.getChildren().get(i));
-		}
-
-		// if counter == number of internal nodes return true
-		if (counter == internalNodes)
-			return 1;
-		else
-			return 0;
-
-	}
-
-	// checker for leaves
-	private int intChecker(Position<E> node) {
-		if (numChildren(node) == 0 && isNumeric(node.getElement().toString())) {
-			NewCounter++;	
-			return 1;			
-		}
-		else if (numChildren(node) == 0)
-			return 1;
-		
-		for (int i = 0; i < numChildren(node); i++) {
-		 intChecker(node.getChildren().get(i)); // subtree = 1 +
-		}
-		if (NewCounter == this.numLeaves())
-			return 1;
-		else 
-			return 0;
-	}
-
-	private static boolean isNumeric(String str) {
-		try {
-			Double.parseDouble(str);
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-		return true;
-	}
-
-	private static boolean isOperator(String str) {
-		char[] array = new char[1];
-		array = str.toCharArray();
-		if (array.length > 1)
-			return false;
-		if (array[0] == '+' || array[0] == '-' || array[0] == '/'
-				|| array[0] == '*')
-			return true;
-		else
-			return false;
-	}
 	
 	/*
 	 * evaluateArithmetic() helper methods:

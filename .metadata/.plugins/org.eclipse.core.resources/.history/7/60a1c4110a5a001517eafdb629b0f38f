@@ -1,0 +1,255 @@
+import simpletree.*;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
+public class TreeArithmeticTestIngram {
+
+	@Test (timeout=1000)
+	public void testIsArithmetic() {
+		
+		MyTree<String> tree = new MyTree<String>();
+		
+		assertFalse(tree.isArithmetic());
+
+		tree.setRoot(new SimplePosition<String>("+"));
+		assertFalse(tree.isArithmetic());
+		
+		tree.insert(tree.root(), new SimplePosition<String>("1"));
+		assertFalse(tree.isArithmetic());
+
+		tree.insert(tree.root(), new SimplePosition<String>("1.2"));
+		tree.isArithmetic();
+		//assertTrue(tree.isArithmetic());
+		
+	}
+
+	@Test (timeout=1000)
+	public void testEvaluateArithmetic() {
+
+		MyTree<String> tree;
+		// test 1 + 1.2 = 1.2
+		tree = new MyTree<String>();
+		tree.setRoot(new SimplePosition<String>("+"));
+		tree.insert(tree.root(), new SimplePosition<String>("1"));
+		tree.insert(tree.root(), new SimplePosition<String>("1.2"));
+		assertEquals(2.2, tree.evaluateArithmetic(), 0.00001);
+		
+		// test 2.5 = 2.5
+		tree = new MyTree<String>();
+		tree.setRoot(new SimplePosition<String>("2.5"));
+		assertEquals(2.5, tree.evaluateArithmetic(), 0.00001);
+
+		// test 1+(1+1) = 3
+		tree = new MyTree<String>();
+		tree.setRoot(new SimplePosition<String>("+"));
+		tree.insert(tree.root(), new SimplePosition<String>("1"));
+		SimplePosition<String> position = new SimplePosition<String>("+");
+		tree.insert(tree.root(), position);
+		tree.insert(position, new SimplePosition<String>("1"));
+		tree.insert(position, new SimplePosition<String>("1"));
+		assertEquals(3.0, tree.evaluateArithmetic(), 0.00001);
+		
+	}
+	@Test
+	public void testSimpleArithmetic2(){
+		MyTree<String> bt = new MyTree<String>();
+
+		SimplePosition<String> plus = new SimplePosition<String>("+");
+		SimplePosition<String> times = new SimplePosition<String>("*");
+		SimplePosition<String> minus = new SimplePosition<String>("-");
+		SimplePosition<String> plus1 = new SimplePosition<String>("+");
+		SimplePosition<String> three = new SimplePosition<String>("3");
+		SimplePosition<String> five = new SimplePosition<String>("5");
+		SimplePosition<String> two = new SimplePosition<String>("2");
+		SimplePosition<String> six = new SimplePosition<String>("6");
+		SimplePosition<String> three2 = new SimplePosition<String>("3");
+		
+		bt.setRoot(plus);
+		bt.insert(plus,times);
+		bt.insert(plus,minus);
+		bt.insert(minus, six);
+		bt.insert(minus,three);
+		bt.insert(times, plus1);
+		bt.insert(times, two);
+		bt.insert(plus1, three2);
+		bt.insert(plus1, five);
+		//"(3 + 5) * 2 + (6 - 3)"
+		System.out.println(bt.getArithmeticString());
+
+		System.out.println(bt.evaluateArithmetic());
+		assertEquals(19.0, bt.evaluateArithmetic(),0.00001);
+		System.out.println(bt.getArithmeticString());
+		assertTrue(bt.getArithmeticString().equals("(((3+5)*2)+(6-3))"));
+
+	}
+	@Test 
+	public void testSimpleArithmetic(){
+		MyTree<String> t2 = new MyTree<String>();
+		
+		SimplePosition<String> minusA = new SimplePosition<String>("-");
+		SimplePosition<String> timesA = new SimplePosition<String>("*");
+		SimplePosition<String> plusA = new SimplePosition<String>("+");
+		SimplePosition<String> divideA = new SimplePosition<String>("/");
+		SimplePosition<String> timesA2 = new SimplePosition<String>("*");
+		SimplePosition<String> oneA = new SimplePosition<String>("1");
+		SimplePosition<String> twoA = new SimplePosition<String>("2");
+		SimplePosition<String> fourA = new SimplePosition<String>("4");
+		SimplePosition<String> twentyA = new SimplePosition<String>("20");
+		SimplePosition<String> four2A = new SimplePosition<String>("4");
+		SimplePosition<String> two2A = new SimplePosition<String>("2");
+		
+		t2.setRoot(divideA);
+		t2.insert(divideA,timesA);
+		t2.insert(divideA,timesA2);
+		t2.insert(timesA, minusA);
+		t2.insert(timesA, plusA);
+		t2.insert(minusA, oneA);
+		t2.insert(minusA, twoA);
+		t2.insert(plusA, fourA);
+		t2.insert(plusA, twentyA);
+		t2.insert(timesA2, four2A);
+		t2.insert(timesA2, two2A);
+
+		System.out.println(t2.getArithmeticString());
+		assertEquals(-3.0,t2.evaluateArithmetic(),0.00001);
+		System.out.println(t2.evaluateArithmetic());
+		
+	}
+	@Test
+	public void testAdvancedArithmethic(){
+		MyTree<String> ad = new MyTree<String>();
+		SimplePosition<String> root = new SimplePosition<String>("-");
+		ad.setRoot(root);
+		SimplePosition<String> position1 = new SimplePosition<String>("*");
+		SimplePosition<String> position2 = new SimplePosition<String>("+");
+		ad.insert(root, position1);
+		ad.insert(root, position2);
+		SimplePosition<String> a = new SimplePosition<String>("-");
+		SimplePosition<String> b = new SimplePosition<String>("+");
+		ad.insert(position1,a);
+		ad.insert(position1,b);
+		SimplePosition<String> c = new SimplePosition<String>("/");
+		SimplePosition<String> d = new SimplePosition<String>("*");
+		ad.insert(position2,c);
+		ad.insert(position2,d);
+		SimplePosition<String> e = new SimplePosition<String>("/");
+		SimplePosition<String> f = new SimplePosition<String>("-");
+		ad.insert(a,e);
+		ad.insert(a,f);
+		ad.insert(e, new SimplePosition<String>("32"));
+		ad.insert(e, new SimplePosition<String>("2"));
+		ad.insert(f, new SimplePosition<String>("64"));
+		ad.insert(f, new SimplePosition<String>("8"));
+		ad.insert(b, new SimplePosition<String>("126"));
+		ad.insert(b, new SimplePosition<String>("2"));
+		ad.insert(c, new SimplePosition<String>("3"));
+		ad.insert(c, new SimplePosition<String>("2"));
+		ad.insert(d, new SimplePosition<String>("0.5"));
+		ad.insert(d, new SimplePosition<String>("7.25"));
+		System.out.println(ad.getArithmeticString());
+		System.out.println(ad.evaluateArithmetic());
+		assertEquals(-5125.125,ad.evaluateArithmetic(),0.00001);
+
+		
+	}
+	@Test (timeout=1000)
+	public void testGetArithmeticString() {
+
+		MyTree<String> tree;
+		String arithmeticString;
+		
+		tree = new MyTree<String>();
+		tree.setRoot(new SimplePosition<String>("+"));
+		tree.insert(tree.root(), new SimplePosition<String>("1"));
+		tree.insert(tree.root(), new SimplePosition<String>("1.2"));
+		arithmeticString = tree.getArithmeticString();
+		//System.out.println(tree.getArithmeticString());
+		//the outermost brackets are optional, both these cases will be accepted:
+		assertTrue(arithmeticString.equals("1+1.2") || arithmeticString.equals("(1+1.2)"));
+
+		tree = new MyTree<String>();
+		tree.setRoot(new SimplePosition<String>("2.5"));
+		arithmeticString = tree.getArithmeticString();
+		//the outermost brackets are optional, both these cases will be accepted:
+		assertTrue(arithmeticString.equals("2.5") || arithmeticString.equals("(2.5)"));
+
+		tree = new MyTree<String>();
+		tree.setRoot(new SimplePosition<String>("+"));
+		tree.insert(tree.root(), new SimplePosition<String>("1"));
+		SimplePosition<String> position = new SimplePosition<String>("+");
+		tree.insert(tree.root(), position);
+		tree.insert(position, new SimplePosition<String>("1"));
+		tree.insert(position, new SimplePosition<String>("1"));
+		arithmeticString = tree.getArithmeticString();
+		//the outermost brackets are optional, both these cases will be accepted:
+		assertTrue(arithmeticString.equals("1+(1+1)") || arithmeticString.equals("(1+(1+1))"));
+		
+	}
+	@Test (timeout=1000)
+	public void testLeafOperator(){
+		MyTree<String> lo = new MyTree<String>();
+		lo.setRoot(new SimplePosition<String>("+"));
+		lo.insert(lo.root(),new SimplePosition<String>("1"));
+		lo.insert(lo.root(), new SimplePosition<String>("*"));
+		assertFalse(lo.isArithmetic());
+	}
+	@Test (timeout=1000)
+	public void testOneLeafOperator(){
+		MyTree<String> olo = new MyTree<String>();
+		olo.setRoot(new SimplePosition<String>("+"));
+		olo.insert(olo.root(),new SimplePosition<String>("-"));
+		olo.insert(olo.root(), new SimplePosition<String>("*"));
+		olo.insert(olo.root().getChildren().get(0), new SimplePosition<String>("2"));
+		olo.insert(olo.root().getChildren().get(0), new SimplePosition<String>("3"));
+		olo.insert(olo.root().getChildren().get(1), new SimplePosition<String>("23"));//only one
+		assertFalse(olo.isArithmetic());
+	}
+	@Test (timeout=1000)
+	public void testInvalidOperator(){
+		MyTree<String> io = new MyTree<String>();
+		io.setRoot(new SimplePosition<String>("^"));
+		io.insert(io.root(),new SimplePosition<String>("2"));
+		io.insert(io.root(),new SimplePosition<String>("4"));
+		assertFalse(io.isArithmetic());
+	}
+	@Test (timeout=1000)
+	public void testInvalidOperand(){
+		MyTree<String> iand = new MyTree<String>();
+		iand.setRoot(new SimplePosition<String>("+"));
+		iand.insert(iand.root(),new SimplePosition<String>("k"));
+		iand.insert(iand.root(), new SimplePosition<String>("2"));
+		assertFalse(iand.isArithmetic());
+	}
+	@Test (timeout=1000)
+	public void testInternalOperand(){
+		MyTree<String> iop = new MyTree<String>();
+		iop.setRoot(new SimplePosition<String>("8"));
+		iop.insert(iop.root(), new SimplePosition<String>("7"));
+		iop.insert(iop.root(), new SimplePosition<String>("-49"));
+		assertFalse(iop.isArithmetic());
+	}
+	@Test (timeout=1000)
+	public void testDivisionByZero(){
+		MyTree<String> dbz = new MyTree<String>();
+		dbz.setRoot(new SimplePosition<String>("/"));
+		dbz.insert(dbz.root(), new SimplePosition<String>("7"));
+		dbz.insert(dbz.root(), new SimplePosition<String>("0"));
+		assertTrue(dbz.isArithmetic());
+		assertEquals(Double.POSITIVE_INFINITY,dbz.evaluateArithmetic(),0.00001);
+		System.out.println(dbz.evaluateArithmetic());
+	}
+	@Test (timeout=1000)
+	public void testSingleOperand(){
+		MyTree<String> so = new MyTree<String>();
+		so.setRoot(new SimplePosition<String>("5"));
+		assertTrue(so.isArithmetic());
+		assertEquals(5,so.evaluateArithmetic(),0.0001);
+	}
+	@Test (timeout=1000)
+	public void testEmpty(){
+		MyTree<String> em = new MyTree<String>();
+		assertFalse(em.isArithmetic());
+	}
+}

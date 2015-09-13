@@ -46,146 +46,32 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	}
 
 	
-		int NewCounter = 0;
-		@Override
-		public boolean isArithmetic() {
-			NewCounter = 0;
-			if(root()==null || numChildren(root())==0 || !isProperBinary()){
-				return false;
-			}
-			else if (operatorChecker(this.root()) != 1) {
-				System.out.println("falseOperator");
-				return false;
-			}
-			else if (intChecker(this.root()) != 1) {
-			
-				return false;
-			} else
-				return true;
+	int NewCounter = 0;
+	@Override
+	public boolean isArithmetic() {
+		NewCounter = 0;
+		if(root()==null || numChildren(root())==0 || !isProperBinary()){
+			return false;
 		}
-
+		else if (operatorChecker(this.root()) != 1) {
+			return false;
+		}
+		else if (intChecker(this.root()) != 1) {
 		
-		// checker for internal nodes
-		int counter = 0;
-		int internalNodes = 0;
-
-		public int operatorChecker(Position<E> node) {
-			if (numChildren(node) == 0) {
-				return 1;
-			}
-			if (numChildren(node) != 0) {
-				internalNodes++;
-				if (isOperator(node.getElement().toString())) {
-					counter++;
-				}
-			}
-
-			for (int i = 0; i < numChildren(node); i++) {
-				numLeaves(node.getChildren().get(i));
-			}
-
-			// if counter == number of internal nodes return true
-			if (counter == internalNodes)
-				return 1;
-			else
-				return 0;
-
-		}
-
-		// checker for leaves
-		public int intChecker(Position<E> node) {
-			if (numChildren(node) == 0 && isNumeric(node.getElement().toString())) {
-				NewCounter++;	
-				return 1;			
-			}
-			else if (numChildren(node) == 0)
-				return 1;
-			
-			for (int i = 0; i < numChildren(node); i++) {
-			 intChecker(node.getChildren().get(i)); // subtree = 1 +
-			}
-			if (NewCounter == this.numLeaves())
-				return 1;
-			else 
-				return 0;
-		}
-
-		public static boolean isNumeric(String str) {
-			try {
-				Double.parseDouble(str);
-			} catch (NumberFormatException nfe) {
-				return false;
-			}
+			return false;
+		} else
 			return true;
-		}
-
-		public static boolean isOperator(String str) {
-			char[] array = new char[1];
-			array = str.toCharArray();
-			if (array.length > 1)
-				return false;
-			if (array[0] == '+' || array[0] == '-' || array[0] == '/'
-					|| array[0] == '*')
-				return true;
-			else
-				return false;
-		}
-	
-	// END NJ HELPER METHODS FOR isArithmetic()
-	// END NJ HELPER METHODS FOR isArithmetic()
-	// END NJ HELPER METHODS FOR isArithmetic()
+	}
 		
 	@Override
 	public double evaluateArithmetic() {
 		return evaluateArithmetic(this.root()); 
-	}
-		
-	public double evaluateArithmetic(Position <E> node) {
-		if (!hasChildren(node)) 
-			return Double.parseDouble(node.getElement().toString()); 
-		else 
-			return eval(node); 
-		
-	}
-	
-	public double eval(Position <E> node) {
-		Position <E> right = node.getChildren().get(0); 
-		Position <E> left = node.getChildren().get(1);  
-		String element = node.getElement().toString(); 
-		 if (element.equals("+"))
-			 return evaluateArithmetic(right) + evaluateArithmetic(left);
-		 else if (element.equals("-"))
-			 return evaluateArithmetic(right) - evaluateArithmetic(left);
-		 else if(element.equals("*"))
-			 return evaluateArithmetic(right) * evaluateArithmetic(left);
-		 else 
-			 return evaluateArithmetic(right) / evaluateArithmetic(left);
-		 
-
 	}
 
 	@Override
 	public String getArithmeticString() {
 		return infix(this.root());
 	}
-	
-	String str;
-	public String infix(Position <E> node) {
-		if (!hasChildren(node) ){
-			str += node.getElement().toString(); 
-			str = str.replace("null", "");
-			return str;
-		} else {
-			str +="(";
-			infix(node.getChildren().get(0));
-			str += node.getElement().toString();
-			infix(node.getChildren().get(1));
-			str += ")";
-			str = str.replace("null", "");
-			return str; 
-		}		
-	}
-
 
 	@Override
 	public int height() {
@@ -323,15 +209,12 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			}
 		}else{
 			if(first > 0){
-				// no second child means height -1
+				// no second child means height 0
 				return true;
 			}else{
 				return false;
 			}
-		}
-		
-		
-		
+		}	
 	}
 
 	@Override
@@ -391,23 +274,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		
 	}
 	
-	/*
-	 *  helper method for isBinarySearchTree()
-	 * 
-	 */
-	public List<E> inOrderBinary() {
-		List<E> list = new ArrayList<E>();
-		if(root()==null){
-			return list;
-		}else{
-			if(isBinary()){
-				return inorder(this.root(), list);
-			}else{
-				throw new UnsupportedOperationException();
-			}
-		}
-		
-	}
+	
 	
 	// HELPER METHODS:
 	/*
@@ -507,7 +374,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	/*
 	 *  numLeaves() helper method:
 	 */
-	public int numLeaves(Position <E> position) {
+	private int numLeaves(Position <E> position) {
 		int leaves = 0;
 		if (numChildren(position) == 0 ) {
 			return 1;
@@ -522,7 +389,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	 * numLeaves(int maxDepth) helper method.
 	 * NOTE:  Return ONLY numLeaves at the specified depth
 	 */
-	public int numLeaves(Position <E> position, int depth) {
+	private int numLeaves(Position <E> position, int depth) {
 		int leaves = 0;
 		if(depth == 0 && numChildren(position)==0){
 			// is a leaf at the right level
@@ -542,7 +409,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	 * numPositions(int maxDepth) helper method.
 	 * NOTE:  Return ONLY numPositions at the specified depth
 	 */
-	public int numPositions(Position<E> node, int depth) {
+	private int numPositions(Position<E> node, int depth) {
 		int nodes = 0;
 		if(depth == 0 && numChildren(node)==0){
 			// is a leaf at the right level
@@ -597,7 +464,7 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 	/*
 	 * isCompleteBinary() helper method - version 5:
 	 */
-	public boolean isCompleteBinary(Position<E> node){
+	private boolean isCompleteBinary(Position<E> node){
 		int numchilds = numChildren(node);
 		if(numchilds==0){
 			return true;
@@ -621,5 +488,142 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		}else{
 			return false;
 		}
+	}
+	
+	/*
+	 *  helper method for isBinarySearchTree()
+	 */
+	private List<E> inOrderBinary() {
+		List<E> list = new ArrayList<E>();
+		if(root()==null){
+			return list;
+		}else{
+			if(isBinary()){
+				return inorder(this.root(), list);
+			}else{
+				throw new UnsupportedOperationException();
+			}
+		}
+		
+	}	
+	
+	/*
+	 *  Helper methods for isArithmetic():
+	 *  	1. operationChecker
+	 *  	2. intChecker
+	 *  	3. isNumeric
+	 *  	4. isOperator
+	 */
+	
+	// checker for internal nodes
+	int counter = 0;
+	int internalNodes = 0;
+
+	private int operatorChecker(Position<E> node) {
+		if (numChildren(node) == 0) {
+			return 1;
+		}
+		if (numChildren(node) != 0) {
+			internalNodes++;
+			if (isOperator(node.getElement().toString())) {
+				counter++;
+			}
+		}
+
+		for (int i = 0; i < numChildren(node); i++) {
+			numLeaves(node.getChildren().get(i));
+		}
+
+		// if counter == number of internal nodes return true
+		if (counter == internalNodes)
+			return 1;
+		else
+			return 0;
+
+	}
+
+	// checker for leaves
+	private int intChecker(Position<E> node) {
+		if (numChildren(node) == 0 && isNumeric(node.getElement().toString())) {
+			NewCounter++;	
+			return 1;			
+		}
+		else if (numChildren(node) == 0)
+			return 1;
+		
+		for (int i = 0; i < numChildren(node); i++) {
+		 intChecker(node.getChildren().get(i)); // subtree = 1 +
+		}
+		if (NewCounter == this.numLeaves())
+			return 1;
+		else 
+			return 0;
+	}
+
+	private static boolean isNumeric(String str) {
+		try {
+			Double.parseDouble(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean isOperator(String str) {
+		char[] array = new char[1];
+		array = str.toCharArray();
+		if (array.length > 1)
+			return false;
+		if (array[0] == '+' || array[0] == '-' || array[0] == '/'
+				|| array[0] == '*')
+			return true;
+		else
+			return false;
+	}
+	
+	/*
+	 * evaluateArithmetic() helper methods:
+	 * 		1. evaluateArithmetic
+	 * 		2. eval
+	 */
+	private double evaluateArithmetic(Position <E> node) {
+		if (!hasChildren(node)) 
+			return Double.parseDouble(node.getElement().toString()); 
+		else 
+			return eval(node); 
+	}
+	
+	private double eval(Position <E> node) {
+		Position <E> right = node.getChildren().get(0); 
+		Position <E> left = node.getChildren().get(1);  
+		String element = node.getElement().toString(); 
+		 if (element.equals("+"))
+			 return evaluateArithmetic(right) + evaluateArithmetic(left);
+		 else if (element.equals("-"))
+			 return evaluateArithmetic(right) - evaluateArithmetic(left);
+		 else if(element.equals("*"))
+			 return evaluateArithmetic(right) * evaluateArithmetic(left);
+		 else 
+			 return evaluateArithmetic(right) / evaluateArithmetic(left);
+	}
+	
+	/*
+	 * getArithmeticString() helper method
+	 */
+	String str;
+	private String infix(Position <E> node) {
+		if (!hasChildren(node) ){
+			str += node.getElement().toString(); 
+			str = str.replace("null", "");
+			return str;
+		} else {
+			str +="(";
+			infix(node.getChildren().get(0));
+			str += node.getElement().toString();
+			infix(node.getChildren().get(1));
+			str += ")";
+			str = str.replace("null", "");
+			return str; 
+		}		
 	}
 }

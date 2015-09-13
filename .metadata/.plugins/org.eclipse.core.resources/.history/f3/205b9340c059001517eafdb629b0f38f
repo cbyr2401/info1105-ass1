@@ -458,25 +458,5 @@ public class MyTreeTest {
 	//	assertTrue(MyTree.isOperator("+a")); 
 	}
 	
-	@Test
-	public void testIsBinarySearchTree(){
-		MyTree<Integer> bst = new MyTree<>();
-		
-		Position<Integer> a = new SimplePosition<Integer>(6);
-		Position<Integer> b = new SimplePosition<Integer>(12);
-		Position<Integer> c = new SimplePosition<Integer>(10);
-		Position<Integer> d = new SimplePosition<Integer>(2);
-		Position<Integer> e = new SimplePosition<Integer>(5);
-		
-		
-		
-		bst.setRoot(a);
-		bst.insert(a, b);
-		bst.insert(a, c);
-		bst.insert(b, d);
-		bst.insert(b, e);
-		
-		assertTrue(bst.isBinarySearchTree());
-	}
 
 }

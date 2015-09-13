@@ -463,7 +463,7 @@ public class MyTreeTest {
 		MyTree<Integer> bst = new MyTree<>();
 		
 		Position<Integer> a = new SimplePosition<Integer>(6);
-		Position<Integer> b = new SimplePosition<Integer>(12);
+		Position<Integer> b = new SimplePosition<Integer>(4);
 		Position<Integer> c = new SimplePosition<Integer>(10);
 		Position<Integer> d = new SimplePosition<Integer>(2);
 		Position<Integer> e = new SimplePosition<Integer>(5);

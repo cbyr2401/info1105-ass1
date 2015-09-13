@@ -42,6 +42,38 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 		// b) If this tree has a position that the other tree does not, return 1.
 		// c) If the other tree has a position that this one does not, return -1.
 		// d) If the position is in both trees, then compare the values (return if the difference is not 0)
+		
+		/*
+		 *  Check size:
+		 *  	1. the same  ==> keep checking
+		 *  	2. different
+		 *  		a. this is bigger ==> return 1
+		 *  		b. this is smaller ==> return -1
+		 */
+		int thisSize = this.size();
+		int otherSize = this.size();
+
+		if(thisSize > otherSize) return 1;
+		else if(thisSize < otherSize) return -1;
+		else {
+			List<E> thisInOrder = this.inOrder();
+			List<E> otherInOrder = this.inOrder();
+			
+			for(int i=0; i < thisSize; i++){
+				int result = compareNodes(thisInOrder.get(i), otherInOrder.get(i));
+			}
+		}
+		
+		//List<E> thisInOrder = this.inOrder();
+		//List<E> otherInOrder = this.inOrder();
+		
+		
+		return 0;
+	}
+	
+	private int compareNodes(E node, E other){
+		
+		
 		return 0;
 	}
 
@@ -171,50 +203,32 @@ public class MyTree<E extends Comparable<E>> extends SimpleTree<E> implements
 			if(height >= heightCal){
 				return false;
 			}else{
-				return true;
+				return isBalancedBinary(root());
 			}
-			//return isBalancedBinary(root());
 		}
 	}
-	
-	public boolean isBalancedBinary(Position<E> node){
-		//int height = height();
+	/*
+	 * isBalancedBinary() helper method
+	 */
+	private boolean isBalancedBinary(Position<E> node){
 		int childs = numChildren(node);
-		if(childs==2){
-			if(greaterThanOne(node)){
-				return false;
-			}else{
-				for(Position<E> child: node.getChildren()){
-					return isBalancedBinary(child);
-				}
-				return true;
-			}
-		}else if(childs==1){
-			return !greaterThanOne(node);
-		}else{
+		
+		if(childs == 0){
 			return true;
-		}
-	}
-	
-	public boolean greaterThanOne(Position<E> node){
-		int first = height(node.getChildren().get(0));
-		if(numChildren(node)>1){
-			int second = height(node.getChildren().get(1));
-			if(first - second > 1){
-				return true;
-			}else if(second - first > 1){
-				return true;
-			}else{
+		}else if(childs==1){
+			if(height(node.getChildren().get(0))>0){
 				return false;
+			}else{
+				return true;
 			}
+		}else if(childs==2){
+			for(Position<E> child : node.getChildren()){
+				if(isBalancedBinary(child)==false) return false;
+			}
+			return true;
 		}else{
-			if(first > 0){
-				// no second child means height 0
-				return true;
-			}else{
-				return false;
-			}
-		}	
+			return false;
+		}
 	}
 
 	@Override

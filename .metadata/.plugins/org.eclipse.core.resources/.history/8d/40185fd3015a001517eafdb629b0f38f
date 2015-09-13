@@ -126,7 +126,6 @@ public class TreePropertiesTest {
 		assertTrue(treeEmpty.isBalancedBinary());
 		assertTrue(treeSingleNode.isBalancedBinary());
 		assertTrue(treeBinaryAbc.isBalancedBinary());
-		assertTrue(treePathAb.isBinary());
 		assertTrue(treePathAb.isBalancedBinary());
 		assertFalse(treePathAbc.isBalancedBinary());
 
